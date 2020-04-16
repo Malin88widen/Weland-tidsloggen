@@ -18,5 +18,5 @@ ReactDOM.render(
 serviceWorker.unregister();
 */
 
-const element = <h1>Hello Worlds</h1>;
+const element = <h1>Hello </h1>;
 ReactDOM.render(element, document.getElementById("root"));
