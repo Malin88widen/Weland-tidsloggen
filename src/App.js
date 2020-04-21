@@ -13,7 +13,7 @@ class App extends Component {
         <NavBar/>
         <br />
         <main className="homePageWelands">
-    <h1>Hej </h1>
+    <h1>Hej</h1>
         </main>
     </div>
     );
