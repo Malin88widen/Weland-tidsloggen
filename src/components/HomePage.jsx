@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 
-class homePage extends Component {
-  render() {
+class HomePage extends Component {
+    render(){
     return (
-      <div className="homePageWelands">
-        <h1>Hello World!</h1>
+    <div className="homePageWelands">
+        <h1>Hej Malin</h1>
       </div>
     );
+    }
   }
-}
 
-export default homePage;
+
+export default HomePage;
 
 // class homePageWelands extends Component {
 //   render() {

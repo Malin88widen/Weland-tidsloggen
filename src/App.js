@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import NavBar from "./components/navbarWelands";
-import homePageWelands from "./components/homePageWelands";
+import homePageWelands from "./components/HomePage";
 import Counters from "./components/counters";
 import "./App.css";
-
+import HomePage from './components/HomePage';
+import Form from './components/Form';
+import History from './components/History';
 class App extends Component {
   
 
@@ -13,7 +15,18 @@ class App extends Component {
         <NavBar/>
         <br />
         <main className="homePageWelands">
-    <h1>Hej</h1>
+        <h1><HomePage /></h1>
+        <br />
+      <p><Form /></p>
+      <p><History /></p>
+      
+      <br />
+      <br />
+
+      <button>
+        Inställningar
+      </button>
+    
         </main>
     </div>
     );
