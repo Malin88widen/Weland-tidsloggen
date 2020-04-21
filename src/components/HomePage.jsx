@@ -10,7 +10,6 @@ class HomePage extends Component {
     }
   }
 
-
 export default HomePage;
 
 // class homePageWelands extends Component {

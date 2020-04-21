@@ -12,7 +12,7 @@ class App extends Component {
   render() {
     return (
     <div>
-        <NavBar/>
+  <NavBar/>
         <br />
         <main className="homePageWelands">
         <h1><HomePage /></h1>
@@ -26,11 +26,10 @@ class App extends Component {
       <button>
         Inställningar
       </button>
-    
-        </main>
-    </div>
-    );
-  }
+    </main>
+    </div> 
 }
+
+
 
 export default App;

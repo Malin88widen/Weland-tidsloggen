@@ -7,7 +7,7 @@ function Form() {
       <input type={"text"}></input>
       <br />
       <br />
-      <label for="hours">Skriv in dina arbetande timmar:  </label>
+      <label for="hours">Skriv in dina arbetande timmar: </label>
       <input type={"numbers"}></input>
       <br />
       <br />
