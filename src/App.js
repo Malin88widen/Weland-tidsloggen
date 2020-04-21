@@ -9,12 +9,13 @@ class App extends Component {
 
   render() {
     return (
-      <React.Fragment>
+    <div>
         <NavBar/>
+        <br />
         <main className="homePageWelands">
-       
+    <h1>Hej </h1>
         </main>
-      </React.Fragment>
+    </div>
     );
   }
 }
