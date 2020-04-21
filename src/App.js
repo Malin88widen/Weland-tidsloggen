@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import NavBar from "./components/navbarWelands";
-import homePageWelands from "./components/HomePage";
-import Counters from "./components/counters";
 import "./App.css";
 import HomePage from './components/HomePage';
 import Form from './components/Form';
 import History from './components/History';
-class App extends Component {
-  
 
-  render() {
+class App extends Component {
+    render() {
     return (
     <div>
   <NavBar/>
@@ -28,6 +25,8 @@ class App extends Component {
       </button>
     </main>
     </div> 
+    );
+  }
 }
 
 
