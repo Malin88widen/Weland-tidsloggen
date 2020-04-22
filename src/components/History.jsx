@@ -34,7 +34,6 @@ function History() {
         
         </table>
       <br />
-      
     <div>
     <br />
     <table class="table table-bordered">
