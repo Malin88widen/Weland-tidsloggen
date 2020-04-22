@@ -4,6 +4,11 @@ import "./App.css";
 import HomePage from "./components/HomePage";
 import Form from "./components/Form";
 import History from "./components/History";
+import Settings from './components/Settings';
+
+
+
+
 
 class App extends Component {
   render() {
@@ -26,10 +31,17 @@ class App extends Component {
                 <Form />
               </p>
             </div>
+           
             <div class="row">
               <div class="col-sm-4"></div>
               <p>
                 <History />
+              </p>
+            </div>
+            <div class="row">
+              <div class="col-sm-4"></div>
+              <p>
+                <Settings />
               </p>
             </div>
             <div class="row">
