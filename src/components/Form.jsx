@@ -2,16 +2,24 @@ import React, { Component } from "react";
 
 function Form() {
   return (
-    <form>
-      <label for="activity">Välj Aktivitet eller skriv in en ny: </label>
-      <input type={"text"}></input>
+   <form>
+        <div class="form-group">
+      <label for="activity">Välj Aktivitet:</label>
+      <select  class="form-control">
+        <option value="meeting">Möte</option>
+        <option value="dokumentation">Dokumentation</option>
+        <option selected value="support">
+          Support
+        </option>
+        <option value="mango">Felsökning</option>
+      </select>
       <br />
       <br />
-      <label for="hours">Skriv in dina arbetande timmar: </label>
-      <input type={"numbers"}></input>
+      <label for="hours">Skriv in dina arbetande timmar:</label>
+      <input class="form-control" type={"numbers"}></input>
       <br />
-      <br />
-      <input type="submit" value="Submit" />
+      <button type="button" class="btn btn-success">Spara</button>
+      </div>
     </form>
   );
 }

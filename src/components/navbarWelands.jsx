@@ -6,11 +6,15 @@ const NavBar = () => {
       <a class="navbar-brand" href="#">
         Weland Solution
       </a>
+      <row>
+        <col-sm-4>
       <div>
         <p>
           <strong> Tidsloggen </strong>
         </p>
       </div>
+      </col-sm-4>
+      </row>
       <button
         class="navbar-toggler"
         type="button"
@@ -27,9 +31,6 @@ const NavBar = () => {
         <div class="navbar-nav">
           <a class="nav-item nav-link active" href="#">
             Hem <span class="sr-only">(current)</span>
-          </a>
-          <a class="nav-item nav-link" href="/Historik">
-            Historik
           </a>
           <a class="nav-item nav-link" href="/Inställningar">
             Inställningar

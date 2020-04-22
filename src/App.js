@@ -1,34 +1,45 @@
 import React, { Component } from "react";
 import NavBar from "./components/navbarWelands";
 import "./App.css";
-import HomePage from './components/HomePage';
-import Form from './components/Form';
-import History from './components/History';
+import HomePage from "./components/HomePage";
+import Form from "./components/Form";
+import History from "./components/History";
 
 class App extends Component {
-    render() {
+  render() {
     return (
-    <div>
-  <NavBar/>
+      <div>
+        <NavBar />
         <br />
         <main className="homePageWelands">
-        <h1><HomePage /></h1>
-        <br />
-      <p><Form /></p>
-      <p><History /></p>
-      
-      <br />
-      <br />
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-4"></div>
+              <h1>
+                <HomePage />
+              </h1>
+            </div>
 
-      <button>
-        Inställningar
-      </button>
-    </main>
-    </div> 
+            <div class="row">
+              <div class="col-sm-4"></div>
+              <p>
+                <Form />
+              </p>
+            </div>
+            <div class="row">
+              <div class="col-sm-4"></div>
+              <p>
+                <History />
+              </p>
+            </div>
+            <div class="row">
+              <div class="col-sm-4"></div>
+            </div>
+          </div>
+        </main>
+      </div>
     );
   }
 }
-
-
 
 export default App;
