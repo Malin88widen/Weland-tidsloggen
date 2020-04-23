@@ -14,43 +14,8 @@ class App extends Component {
     return (
       <div>
         <NavBar />
-
-        
-       
         <br />
-        <main className="homePageWelands">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-4"></div>
-              <h1>
-                <HomePage />
-              </h1>
-            </div>
-
-            <div class="row">
-              <div class="col-sm-4"></div>
-              <p>
-                <Form />
-              </p>
-            </div>
-           
-            {/* <div class="row">
-              <div class="col-sm-4"></div>
-              <p>
-                <History />
-              </p>
-            </div>
-            <div class="row">
-              <div class="col-sm-4"></div>
-              <p>
-                <Settings />
-              </p>
-            </div>
-            <div class="row">
-              <div class="col-sm-4"></div>
-            </div> */}
-          </div>
-        </main>
+        {/* <HomePage /> */}
       </div>
     );
   }
