@@ -27,12 +27,12 @@ class App extends Component {
               </h1>
             </div>
 
-            {/* <div class="row">
+            <div class="row">
               <div class="col-sm-4"></div>
               <p>
                 <Form />
               </p>
-            </div> */}
+            </div>
            
             {/* <div class="row">
               <div class="col-sm-4"></div>
