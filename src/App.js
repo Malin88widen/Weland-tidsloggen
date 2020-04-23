@@ -4,12 +4,19 @@ import "./App.css";
 import HomePage from "./components/HomePage";
 import Form from "./components/Form";
 import History from "./components/History";
+import Settings from './components/Settings';
+// import Dropdown from './components/navbarWelands';
+
+
 
 class App extends Component {
   render() {
     return (
       <div>
         <NavBar />
+
+        
+       
         <br />
         <main className="homePageWelands">
           <div class="container">
@@ -26,7 +33,8 @@ class App extends Component {
                 <Form />
               </p>
             </div>
-            <div class="row">
+           
+            {/* <div class="row">
               <div class="col-sm-4"></div>
               <p>
                 <History />
@@ -34,7 +42,13 @@ class App extends Component {
             </div>
             <div class="row">
               <div class="col-sm-4"></div>
+              <p>
+                <Settings />
+              </p>
             </div>
+            <div class="row">
+              <div class="col-sm-4"></div>
+            </div> */}
           </div>
         </main>
       </div>
