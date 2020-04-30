@@ -11,7 +11,7 @@ function Form() {
         <option selected value="support">
           Support
         </option>
-        <option value="mango">Felsökning</option>
+        <option value="error">Felsökning</option>
       </select>
       <br />
       <br />
