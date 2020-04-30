@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+
 namespace WelandTimeLogg
 {
     public class Startup
@@ -32,7 +33,7 @@ namespace WelandTimeLogg
             services.AddDbContext<DBContext>(options => options.UseSqlServer(
            Configuration.GetConnectionString("TimeLogg")));
 
-
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
 
         }
@@ -54,6 +55,7 @@ namespace WelandTimeLogg
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+            app.UseMvc();
 
             app.UseRouting();
 
