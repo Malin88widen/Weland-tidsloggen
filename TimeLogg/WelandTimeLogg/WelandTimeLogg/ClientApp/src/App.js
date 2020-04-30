@@ -14,25 +14,7 @@ import {
 class App extends Component {
     render() {
         return (
-            <Router>
-            <div>
-                <NavBar />
-                    <br />
-                    <Link to="/settings">Settings</Link>
-                    <Link to="/history">History</Link>
-            </div> 
-                <Switch>
-                    <Route exact path="/">
-                        <HomePage />
-                    </Route>
-                    <Route path="/settings">
-                        <Settings />
-                    </Route>
-                    <Route path="/history">
-                        <History />
-                    </Route>
-                </Switch>
-            </Router>
+            <NavBar />
         );
     }
 }
