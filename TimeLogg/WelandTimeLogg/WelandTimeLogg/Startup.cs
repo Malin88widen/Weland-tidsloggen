@@ -28,6 +28,13 @@ namespace WelandTimeLogg
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddDbContext<DBContext>(options => options.UseSqlServer(
+           Configuration.GetConnectionString("TimeLogg")));
+
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
