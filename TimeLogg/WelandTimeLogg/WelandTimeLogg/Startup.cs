@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,15 +24,15 @@ namespace WelandTimeLogg
             services.AddControllersWithViews();
 
             // In production, the React files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/build";
-            });
+            //services.AddSpaStaticFiles(configuration =>
+            //{
+            //    configuration.RootPath = "ClientApp/build";
+            //});
 
-            services.AddDbContext<DBContext>(options => options.UseSqlServer(
-           Configuration.GetConnectionString("TimeLogg")));
+           // services.AddDbContext<DBContext>(options => options.UseSqlServer(
+           //Configuration.GetConnectionString("TimeLogg")));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+           // services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
 
         }
@@ -54,8 +53,8 @@ namespace WelandTimeLogg
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseSpaStaticFiles();
-            app.UseMvc();
+            //app.UseSpaStaticFiles();
+            //app.UseMvc();
 
             app.UseRouting();
 
@@ -66,15 +65,15 @@ namespace WelandTimeLogg
                     pattern: "{controller}/{action=Index}/{id?}");
             });
 
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "ClientApp";
+            //app.UseSpa(spa =>
+            //{
+            //    spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment())
-                {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
-                }
-            });
+            //    if (env.IsDevelopment())
+            //    {
+            //        spa.UseReactDevelopmentServer(npmScript: "start");
+            //    }
+            //});
         }
     }
 }
