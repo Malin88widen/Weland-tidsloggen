@@ -7,5 +7,6 @@ namespace WelandTimeLogg.Controllers
 {
     public class ActivityInputController
     {
+        //Test
     }
 }
