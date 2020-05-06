@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WelandTimeLogg.Models
 {
-    public class AcytivityHistory
+    public class ActivityHistory
     {
         public int Id { get; set; }
 

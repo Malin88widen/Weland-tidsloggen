@@ -13,5 +13,13 @@ namespace WelandTimeLogg.DataAccess
         { }
 
         public DbSet<Activity> Activity { get; set; }
+
+        public DbSet<ActivityHistory> ActivityHistory { get; set; }
+
+        public DbSet<Department> Department { get; set; }
+
+        public DbSet<TimeEntries> TimeEntries { get; set; }
+
+        public DbSet<User> User { get; set; }
     }
 }
