@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WelandTimeLogg.DataAccess;
 
 namespace WelandTimeLogg
 {
@@ -28,10 +29,15 @@ namespace WelandTimeLogg
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            //var conn = _configuration.GetConnectionString("TimeLoggConString");
+            //services.AddDbContext<DefaultDataContext>(options => options.UseSqlServer(conn));
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DefaultDataContext context)
         {
             if (env.IsDevelopment())
             {
