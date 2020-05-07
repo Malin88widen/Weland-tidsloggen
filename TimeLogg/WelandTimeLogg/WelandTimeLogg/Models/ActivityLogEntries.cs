@@ -5,14 +5,16 @@ using System.Threading.Tasks;
 
 namespace WelandTimeLogg.Models
 {
-    public class TimeEntries
+    public class ActivityLogEntries
     {
         public int Id { get; set; }
 
-        public DateTime Time { get; set; }
+        public DateTime CreatedDate { get; set; }
+
+        public DateTime Hours { get; set; }
 
         public User User { get; set; }
 
-        public Activity Activity { get; set; }
+        public Activity Activities { get; set; }
     }
 }

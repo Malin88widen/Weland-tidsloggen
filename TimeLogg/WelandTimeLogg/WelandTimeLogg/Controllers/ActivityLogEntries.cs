@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WelandTimeLogg.Controllers
 {
     [Route("api/[controller]")]
-    public class ActivityHistoryController : Controller
+    public class ActivityLogEntries : Controller
     {
         // GET: api/<controller>
         [HttpGet]

@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace WelandTimeLogg.Models
 {
-    public class ActivityHistory
+    public class Test
     {
         public int Id { get; set; }
-
-        public DateTime PublishedDate { get; set; }
-
-        public User User { get; set; }
-
-        public Activity Activity { get; set; }
+        public string Name { get; set; }
+        public string Category { get; set; }
+        public decimal Price { get; set; }
     }
 }
+
+
+
