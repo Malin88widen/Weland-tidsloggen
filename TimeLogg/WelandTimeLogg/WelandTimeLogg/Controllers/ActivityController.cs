@@ -9,7 +9,7 @@ using WelandTimeLogg.Models;
 
 namespace WelandTimeLogg.Controllers
 {
-    [Route("api/activity")]
+    [Route("/")]
     public class ActivityController : Controller
     {
         Activity[] activities = new Activity[]
@@ -19,19 +19,19 @@ namespace WelandTimeLogg.Controllers
             new Activity { Id = 3, Name = "Dokumentation"}
         };
 
-        [HttpGet]
-        public IEnumerable<Activity> GetAllActivities()
+        [HttpGet("api/activities")]
+        public List <Activity> GetAllActivities()
         {
-            return activities;
+            return activities.ToList();
         }
 
 
-        //[HttpGet]
-        //public IActionResult GetActivity(int id)
-        //{
-        //    var activity = activities.FirstOrDefault((p) => p.Id == id);
-        //    return Ok(activity);
-        //}
+        [HttpGet("api/activities/{Id}")]
+        public IActionResult GetActivity(int id)
+        {
+            var activity = activities.Where(a => a.Id == id).ToList();
+            return Ok(activity);
+        }
     }
 }
 

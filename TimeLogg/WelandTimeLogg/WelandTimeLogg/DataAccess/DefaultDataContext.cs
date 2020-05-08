@@ -19,5 +19,7 @@ namespace WelandTimeLogg.DataAccess
         public DbSet<ActivityLogEntries> ActivityLogEntries { get; set; }
 
         public DbSet<User> User { get; set; }
+
+        public DbSet<Forms> Forms { get; set; }
     }
 }
