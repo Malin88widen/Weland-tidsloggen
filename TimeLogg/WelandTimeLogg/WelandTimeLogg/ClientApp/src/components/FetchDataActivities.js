@@ -1,102 +1,91 @@
 import React, { Component } from "react";
 import axios from 'axios';
+import Form from "./Form";
+import Button from "react-bootstrap/Button";
 
-//class FetchData extends Component
-//state = {
-//    loading: true,
-//    person: null
-//};
-
-//async componentDidMount() {
-//    const url = "https://api.randomuser.me/";
-//    const response = await fetch(url);
-//    const data = await response.json();
-//    this.setState({ person: data.results[0], loading: false });
-//}
-//render() {
-//    return (
-//        <NavBar />
-//        <div>
-//            {this.state.loading || !this.state.person ? (
-//                <div>loading...</div>
-//            ) : (
-//                    <div>
-//                        <div>{this.state.person.name.first}</div>
-//                    </div>
-//                )}
-//        </div>
-        
-//        );
-//}
-//}
-
-
-//export default FetchData;
-
-class FetchDataActivities extends React.Component {
+class FetchDataActivity extends React.Component {
     state = {
-            Activity: []
+        loading: true,
+        activity: [],
+        person: null
+    };
+
+    async componentDidMount() {
+        const url = "https://localhost:44383/api/activities";
+
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data);
+        this.setState({ activity: data, loading: false });
+
+
+
     }
+    render() {
+        return (
 
 
-    
+            //<div>
+            //    {this.state.loading || !this.state.activity ? (
+            //        <div>loading...</div>
+            //    ) : (
+            //            <div>
+            //                <div>{this.state.activity.id}</div>
+            //                <div>{this.state.activity.name}</div>
+            //            </div>
 
-    componentDidMount() {
-        axios.get("https://localhost:44383/api/activities").then(response => {
-            console.log(response.data);
-            this.setState({
-                Activity: response.data
-            });
-        });
+            //        )}
+            
 
-    }
-
-        render() {
-            return (
-                <div>
-                    <h1>Aktivitetslista</h1>
-
-                        <table>
+            <div id="HomePageCSS">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4"></div>
+                        <h1>Hej Malin</h1>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-4"></div>
+                        <p>
+                   
+                        </p>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+                    <h4>Idag:</h4>
+                    <table class="table table-bordered">
+                        <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Id</th>
-                          
+                                <th scope="col">Aktivitet</th>
+                                <th scope="col">Tid</th>
+                            </tr>
+                        </thead>
+
+                        <tr>
+                                <th scope="row">{this.state.activity.name}</th>
+                            <td>1,30 h</td>
                         </tr>
-                        {this.state.Activity.map(Activity =>
-                                <tr>
-                                    <td>{Activity.Name}</td>
-                                    <td>{Activity.Id}</td>
-                             
-                                    <td>
+                        <tr>
+                            <th scope="row">    
+                                {this.state.activity.map((activity, id) => {
+                                    return <li key={id}>{activity.name}</li>;
+                                })}
+                              
+                                    </th>
+                                <td>3 h</td>
+                        </tr>
+                    </table>
+                    <Button variant="primary">Spara och skicka till historik</Button>{" "}
+                </div>
+                </div>
+            
 
-
-                                    </td>
-                                </tr>
-                            )}
-                        </table>
-                 </div>    
-            );
-        }
+        );
     }
-    
-
-    //render() {
-    //    return (
-    //        <div>
-    //            {this.state.tests ? (
-    //                <div>loading...</div>
-    //            ) : (
-    //                    <div>
-    //                        <div>{this.state.tests.map(test =>
-    //                        {tests.Name}
-    //                            }</div>
-    //                    </div>
-    //                )}
-    //        </div>
-
-    //    );
-
-    //}
+}
 
 
-export default FetchDataActivities;
+
+export default FetchDataActivity;
+

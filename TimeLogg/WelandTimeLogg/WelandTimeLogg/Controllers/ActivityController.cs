@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WelandTimeLogg.DataAccess;
 using WelandTimeLogg.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,24 +13,32 @@ namespace WelandTimeLogg.Controllers
     [Route("/")]
     public class ActivityController : Controller
     {
-        Activity[] activities = new Activity[]
+
+        private readonly DefaultDataContext dataContext;
+
+        public ActivityController(DefaultDataContext context)
         {
-            new Activity { Id = 1, Name = "Support" },
-            new Activity { Id = 2, Name = "Möte"},
-            new Activity { Id = 3, Name = "Dokumentation"}
-        };
+            dataContext = context;
+        }
+
+        //Activity[] activities = new Activity[]
+        //{
+        //    new Activity { Id = 1, Name = "Support" },
+        //    new Activity { Id = 2, Name = "Möte"},
+        //    new Activity { Id = 3, Name = "Dokumentation"}
+        //};
 
         [HttpGet("api/activities")]
-        public List <Activity> GetAllActivities()
+        public List<Activity> GetAllActivities()
         {
-            return activities.ToList();
+            return dataContext.Activity.ToList();
         }
 
 
         [HttpGet("api/activities/{Id}")]
         public IActionResult GetActivity(int id)
         {
-            var activity = activities.Where(a => a.Id == id).ToList();
+            var activity = dataContext.Activity.Where(a => a.Id == id).ToList();
             return Ok(activity);
         }
     }

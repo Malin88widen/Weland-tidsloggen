@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WelandTimeLogg.DataAccess;
 
 namespace WelandTimeLogg.Migrations
 {
     [DbContext(typeof(DefaultDataContext))]
-    partial class DefaultDataContextModelSnapshot : ModelSnapshot
+    [Migration("20200511095411_forms")]
+    partial class forms
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

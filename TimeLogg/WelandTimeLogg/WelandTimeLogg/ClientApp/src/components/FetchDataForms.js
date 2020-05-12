@@ -1,5 +1,8 @@
 import React, { Component } from "react";
+import Form from './Form'
 import axios from 'axios';
+import Table from 'react-bootstrap/table';
+import Button from "react-bootstrap/Button";
 
 class FetchDataForms extends React.Component {
     state = {
@@ -14,23 +17,53 @@ class FetchDataForms extends React.Component {
         const response = await fetch(url);
         const data = await response.json();
         console.log(data);
-        this.setState({ forms: data[1], loading: false });
+        this.setState({ forms: data, loading: false });
+
+
 
 
     }
+
+
+
     render() {
         return (
-            <div>
-                {this.state.loading || !this.state.forms ? (
-                    <div>loading...</div>
-                ) : (
-                        <div>
-                            <div>{this.state.forms.id}</div>
-                            <div>{this.state.forms.name}</div>
-                        </div>
-                    )}
-            </div>
+            <div id="HomePageCSS">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4"></div>
+                        <form>
+                            <div class="form-group">
+                                <label for="forms">Spara Aktivitet:</label>
+                                <select class="form-control">
+                                    <option value="meeting">Möte</option>
+                                    <option value="dokumentation">Dokumentation</option>
+                                    <option selected value="default">
+                                        hey
+                                    </option>
+                                    <option value="mango">Felsökning</option>
+                                </select>
+                                <br />
+                                <br />
+                                <label for="hours">Skriv in dina arbetande timmar:</label>
+                                <input class="form-control" type={"numbers"}></input>
+                                <br />
+                                <button type="button" class="btn btn-success">Spara</button>
+                            </div>
 
+
+                            <ul>
+                                {this.state.forms.map((form, id) => {
+                                    return <li key={id}>{form.name}</li>;
+                                })}
+
+                                
+                            </ul>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
         );
     }
 }
@@ -38,104 +71,10 @@ class FetchDataForms extends React.Component {
 
 export default FetchDataForms;
 
-//    constructor(props) {
-//        super(props)
-//        this.state = {
-//            forms: []
-//        }
-
-       
-//    }
-
-//    componentDidMount() {
-//        axios.get("https://localhost:44383/api/forms").then(response => {
-//            console.log(response.data);
-//            this.setState({
-//                forms: response.data/*[0]*/
-//            });
-//        });
-
-//    }
-//    render() {
-//        return (
-    
-
-//            <table>
-//                <tr>
-//                    <th>Name</th>
-//                    <th>Id</th>
-
-//                </tr>
-//                {this.state.forms.map(Forms =>
-//                    <tr>
-//                        <td>{Forms.Name}</td>
-//                        <td>{Forms.Id}</td>
-
-//                        <td>
-
-
-//                        </td>
-//                    </tr>
-//                )}
-//            </table>
-//            //<div>
-//            //    <div>
-//            //        <div>{this.state.forms.map(Forms => {Forms.Name })}</div>
-//            //    </div>
-
-//            //</div>
-
-        
-
-//        )
-//    };
-//}
-
-//    //render() {
-//    //    return ()
-//    //        <div>
-//    //            {this.state.forms}
-
-//    //        </div
-
-        
-
-//    //}
-////}
-
-
-//export default FetchDataForms;
-
-////Version av ovanstående:
-
-////class FetchData extends Component
-////state = {
-////    loading: true,
-////    person: null
-////};
-
-////async componentDidMount() {
-////    const url = "https://api.randomuser.me/";
-////    const response = await fetch(url);
-////    const data = await response.json();
-////    this.setState({ person: data.results[0], loading: false });
-////}
-////render() {
-////    return (
-////        <NavBar />
-////        <div>
-////            {this.state.loading || !this.state.person ? (
-////                <div>loading...</div>
-////            ) : (
-////                    <div>
-////                        <div>{this.state.person.name.first}</div>
-////                    </div>
-////                )}
-////        </div>
-
-////        );
-////}
-////}
-
-
-////export default FetchData;
+                        //<ul>
+                        //    <li>
+                        //        {this.state.forms.map((Form) => Form
+                        //     { this.state.forms.name }
+                        //       )  </li>
+                        //    )};
+                        //</ul>

@@ -16,6 +16,9 @@ import {
     Route,
     Link
 } from "react-router-dom";
+import FetchDataForms from "./components/FetchDataForms";
+
+
 
 class App extends Component {
 
@@ -26,12 +29,12 @@ class App extends Component {
                 <div><NavBar /></div>
                 <br />
                 <br />
-                <div><FetchDataHistory /></div>
+                <div><FetchDataForms /></div>
                 <div><FetchDataActivities /></div>
-                <div><FetchDataWorking /></div>
+             
                 <br />
-                <h1>Data from Form:</h1>
-                <div><FetchDataForm /></div>
+              
+          
             
             
             </div>
