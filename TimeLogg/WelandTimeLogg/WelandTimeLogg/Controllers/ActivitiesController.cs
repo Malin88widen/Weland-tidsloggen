@@ -11,12 +11,12 @@ using WelandTimeLogg.Models;
 namespace WelandTimeLogg.Controllers
 {
     [Route("/")]
-    public class ActivityController : Controller
+    public class ActivitiesController : Controller
     {
 
         private readonly DefaultDataContext dataContext;
 
-        public ActivityController(DefaultDataContext context)
+        public ActivitiesController(DefaultDataContext context)
         {
             dataContext = context;
         }
@@ -28,19 +28,19 @@ namespace WelandTimeLogg.Controllers
         //    new Activity { Id = 3, Name = "Dokumentation"}
         //};
 
-        [HttpGet("api/activities")]
-        public List<Activity> GetAllActivities()
-        {
-            return dataContext.Activity.ToList();
-        }
+        //[HttpGet("api/activities")]
+        //public List<Activities> GetAllActivities()
+        //{
+        //    return dataContext.Activities.ToList();
+        //}
 
 
-        [HttpGet("api/activities/{Id}")]
-        public IActionResult GetActivity(int id)
-        {
-            var activity = dataContext.Activity.Where(a => a.Id == id).ToList();
-            return Ok(activity);
-        }
+        //[HttpGet("api/activities/{Id}")]
+        //public IActionResult GetActivity(int id)
+        //{
+        //    var activity = dataContext.Activities.Where(a => a.Id == id).ToList();
+        //    return Ok(activity);
+        //}
     }
 }
 

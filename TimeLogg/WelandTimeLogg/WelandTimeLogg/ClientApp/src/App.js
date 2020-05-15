@@ -4,7 +4,7 @@ import "./App.css";
 import HomePage from "./components/HomePage";
 import History from "./components/History";
 import Settings from './components/Settings';
-import FetchDataActivities from './components/FetchDataActivities';
+import FetchDataActivities from './components/FetchDataActivityLogEntries';
 import FetchDataForm from './components/FetchDataForms';
 import FetchDataHistory from './components/FetchDataHistory';
 import FetchDataWorking from './components/FetchDataWorking';
@@ -29,7 +29,6 @@ class App extends Component {
                 <div><NavBar /></div>
                 <br />
                 <br />
-                <div><FetchDataForms /></div>
                 <div><FetchDataActivities /></div>
              
                 <br />

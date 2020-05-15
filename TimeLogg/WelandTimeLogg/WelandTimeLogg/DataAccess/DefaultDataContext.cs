@@ -12,8 +12,7 @@ namespace WelandTimeLogg.DataAccess
         public DefaultDataContext(DbContextOptions<DefaultDataContext> options) : base (options)
         { }
 
-        public DbSet<Activity> Activity { get; set; }
-
+        public DbSet<Activities> Aktivities { get; set; }
         public DbSet<Department> Department { get; set; }
 
         public DbSet<ActivityLogEntries> ActivityLogEntries { get; set; }

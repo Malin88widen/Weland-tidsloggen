@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Form from "./Form";
 import Button from "react-bootstrap/Button";
-import FetchDataActivity from "./FetchDataActivities";
+import FetchDataActivity from "./FetchDataActivityLogEntries";
 
 function HomePage() {
     return (

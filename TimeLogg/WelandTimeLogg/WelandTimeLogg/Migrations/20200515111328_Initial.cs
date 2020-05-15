@@ -3,10 +3,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WelandTimeLogg.Migrations
 {
-    public partial class _01 : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Aktivities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Aktivities", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Department",
                 columns: table => new
@@ -18,6 +31,19 @@ namespace WelandTimeLogg.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Department", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Forms",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Forms", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -35,53 +61,28 @@ namespace WelandTimeLogg.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ActivityHistory",
+                name: "ActivityLogEntries",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PublishedDate = table.Column<DateTime>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    Hours = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<int>(nullable: true),
-                    ActivityId = table.Column<int>(nullable: true)
+                    ActivitiesId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ActivityHistory", x => x.Id);
+                    table.PrimaryKey("PK_ActivityLogEntries", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ActivityHistory_Activity_ActivityId",
-                        column: x => x.ActivityId,
-                        principalTable: "Activity",
+                        name: "FK_ActivityLogEntries_Aktivities_ActivitiesId",
+                        column: x => x.ActivitiesId,
+                        principalTable: "Aktivities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ActivityHistory_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TimeEntries",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Time = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<int>(nullable: true),
-                    ActivityId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TimeEntries", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TimeEntries_Activity_ActivityId",
-                        column: x => x.ActivityId,
-                        principalTable: "Activity",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_TimeEntries_User_UserId",
+                        name: "FK_ActivityLogEntries_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
@@ -89,36 +90,29 @@ namespace WelandTimeLogg.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ActivityHistory_ActivityId",
-                table: "ActivityHistory",
-                column: "ActivityId");
+                name: "IX_ActivityLogEntries_ActivitiesId",
+                table: "ActivityLogEntries",
+                column: "ActivitiesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ActivityHistory_UserId",
-                table: "ActivityHistory",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TimeEntries_ActivityId",
-                table: "TimeEntries",
-                column: "ActivityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TimeEntries_UserId",
-                table: "TimeEntries",
+                name: "IX_ActivityLogEntries_UserId",
+                table: "ActivityLogEntries",
                 column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ActivityHistory");
+                name: "ActivityLogEntries");
 
             migrationBuilder.DropTable(
                 name: "Department");
 
             migrationBuilder.DropTable(
-                name: "TimeEntries");
+                name: "Forms");
+
+            migrationBuilder.DropTable(
+                name: "Aktivities");
 
             migrationBuilder.DropTable(
                 name: "User");

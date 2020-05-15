@@ -19,7 +19,7 @@ namespace WelandTimeLogg.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("WelandTimeLogg.Models.Activity", b =>
+            modelBuilder.Entity("WelandTimeLogg.Models.Activities", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -31,7 +31,7 @@ namespace WelandTimeLogg.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Activity");
+                    b.ToTable("Aktivities");
                 });
 
             modelBuilder.Entity("WelandTimeLogg.Models.ActivityLogEntries", b =>
@@ -115,7 +115,7 @@ namespace WelandTimeLogg.Migrations
 
             modelBuilder.Entity("WelandTimeLogg.Models.ActivityLogEntries", b =>
                 {
-                    b.HasOne("WelandTimeLogg.Models.Activity", "Activities")
+                    b.HasOne("WelandTimeLogg.Models.Activities", "Activities")
                         .WithMany()
                         .HasForeignKey("ActivitiesId");
 
