@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Castle.MicroKernel.SubSystems.Conversion;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,7 +17,11 @@ namespace WelandTimeLogg.Models
 
         public DateTime CreatedDate { get; set; }
 
-        public DateTime Hours { get; set; }
+        public int ActivityLastedHours { get; set; }
+
+        [Column(TypeName = "decimal(8,22)")] 
+        [Required(ErrorMessage = "Du måste fylla i timmar i formatet x.xx")]
+        public Decimal Hours { get; set; }
 
         public User User { get; set; }
 

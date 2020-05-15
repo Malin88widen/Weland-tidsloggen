@@ -10,8 +10,8 @@ using WelandTimeLogg.DataAccess;
 namespace WelandTimeLogg.Migrations
 {
     [DbContext(typeof(DefaultDataContext))]
-    [Migration("20200515111328_Initial")]
-    partial class Initial
+    [Migration("20200515113203_int")]
+    partial class @int
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,11 +46,14 @@ namespace WelandTimeLogg.Migrations
                     b.Property<int?>("ActivitiesId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ActivityLastedHours")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Hours")
-                        .HasColumnType("datetime2");
+                    b.Property<decimal>("Hours")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");

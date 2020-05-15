@@ -33,7 +33,7 @@ namespace WelandTimeLogg
 
            
             services.AddDbContext<DefaultDataContext>(options => 
-                options.UseSqlServer(Configuration.GetConnectionString("TimeLogWelandsConString")));
+                options.UseSqlServer(Configuration.GetConnectionString("WelandsTimeLogConString")));
 
 
         }

@@ -56,24 +56,31 @@ namespace WelandTimeLogg.Controllers
         [HttpPost("api/activityLogEntries/post")]
         public ActionResult PostActivityLogEntries(ActivityLogEntries activityLogEntries)
         {
+         
 
-            var ActivityAnswer = new ActivityLogEntries
-            {
-                Name = "Doh", /*Få denna dynamisk!!*/
-                CreatedDate = DateTime.Now,
-                
+          
+
+                var ActivityAnswer = new ActivityLogEntries
+                {
+                    Name = "Doh", /*Få denna dynamisk!!*/
+                    CreatedDate = DateTime.Now,
+                    Hours = 5,
+                    ActivityLastedHours = 2,
 
 
-            };
+                };
+
+          
+
+            
 
             dataContext.ActivityLogEntries.Add(ActivityAnswer);
             dataContext.SaveChanges();
             return CreatedAtAction("GetActivityLogEntriesResults", new { name = activityLogEntries.Name }, ActivityAnswer);
-
-
         }
+
     }
-    
+
 }
 
 

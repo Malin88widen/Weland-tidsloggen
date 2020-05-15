@@ -68,7 +68,7 @@ namespace WelandTimeLogg.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
-                    Hours = table.Column<DateTime>(nullable: false),
+                    Hours = table.Column<decimal>(nullable: false),
                     UserId = table.Column<int>(nullable: true),
                     ActivitiesId = table.Column<int>(nullable: true)
                 },

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WelandTimeLogg.DataAccess;
 
 namespace WelandTimeLogg.Migrations
 {
     [DbContext(typeof(DefaultDataContext))]
-    partial class DefaultDataContextModelSnapshot : ModelSnapshot
+    [Migration("20200515112246_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,9 +44,6 @@ namespace WelandTimeLogg.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("ActivitiesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ActivityLastedHours")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
