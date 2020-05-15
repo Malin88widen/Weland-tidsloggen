@@ -3,36 +3,90 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WelandTimeLogg.DataAccess;
 using WelandTimeLogg.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 namespace WelandTimeLogg.Controllers
 {
-    [Route("/")]
+    
     public class ActivityLogEntriesController : Controller
     {
-        ActivityLogEntries[] activityLogEntries = new ActivityLogEntries[]
+
+        private readonly DefaultDataContext dataContext;
+
+        public ActivityLogEntriesController(DefaultDataContext context)
         {
-            new ActivityLogEntries { Id = 1, Name = "Ettan" },
-            new ActivityLogEntries { Id = 2, Name = "Tvåan"},
-            new ActivityLogEntries { Id = 3, Name = "Trean"}
-        };
+            dataContext = context;
+        }
 
         [HttpGet("api/activityLogEntries")]
-        public List<ActivityLogEntries> GetAllActivities()
+        public IActionResult GetActivityLogEntries()
         {
-            return activityLogEntries.ToList();
+            var activityLog = dataContext.ActivityLogEntries
+            .OrderByDescending(a => a.Name);
+
+       
+
+            return Ok(activityLog);
+
         }
 
 
+        //GET api/forms/5
         [HttpGet("api/activityLogEntries/{Id}")]
-        public IActionResult GetActivity(int id)
+        public IActionResult GetActivityLogResultById(int id)
         {
-            var activityLogEntry = activityLogEntries.Where(al => al.Id == id).ToList();
-            return Ok(activityLogEntries);
+            var activityLog = dataContext.ActivityLogEntries.Where(al => al.Id == id);
+
+            if (activityLog == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(activityLog);
         }
+
+
+
+        //[HttpPost("api/activityLogEntries/post")]
+        //public ActionResult PostActivityLogEntries(ActivityLogEntries activityLogEntries)
+        //{
+
+        //    var Answer = new ActivityLogEntries
+        //    {
+        //        CreatedDate = DateTime.Now,
+        //        Hours = 2,
+        //        Name = "Möte", /*Få denna dynamisk!!*/
+
+        //    };
+
+        //    dataContext.ActivityLogEntries.Add(Answer);
+        //    dataContext.SaveChanges();
+        //    return CreatedAtAction("GetActivityLogEntries", new { name = activityLogEntries.Name }, Answer);
+        //}
+
+
+        [HttpPost("api/activityLogEntries/post")]
+        public ActionResult PostActivityLogEntries(ActivityLogEntries activityLogEntries)
+        {
+
+            var Answer = new ActivityLogEntries
+            {
+                Name = "Möte" /*Få denna dynamisk!!*/
+
+            };
+
+            dataContext.ActivityLogEntries.Add(Answer);
+             dataContext.SaveChanges();
+            return CreatedAtAction("GetActivityLogEntries", new { name = activityLogEntries.Name }, Answer);
+        }
+
     }
 }
+
+
+
 //namespace WelandTimeLogg.Controllers
 //{
 //    [Route("api/[controller]")]

@@ -30,6 +30,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200514173333_Initial.cs" />
+    <Compile Remove="Migrations\20200514173333_Initial.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="TimeData\" />
   </ItemGroup>
 

@@ -10,8 +10,8 @@ using WelandTimeLogg.DataAccess;
 namespace WelandTimeLogg.Migrations
 {
     [DbContext(typeof(DefaultDataContext))]
-    [Migration("20200506080542_01")]
-    partial class _01
+    [Migration("20200515093545_Ignore_changes")]
+    partial class Ignore_changes
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,44 +21,30 @@ namespace WelandTimeLogg.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("WelandTimeLogg.Models.Activity", b =>
+            modelBuilder.Entity("WelandTimeLogg.Models.ActivityLogEntries", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Hours")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Activity");
-                });
-
-            modelBuilder.Entity("WelandTimeLogg.Models.ActivityHistory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ActivityId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("PublishedDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ActivityId");
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("ActivityHistory");
+                    b.ToTable("ActivityLogEntries");
                 });
 
             modelBuilder.Entity("WelandTimeLogg.Models.Department", b =>
@@ -76,29 +62,19 @@ namespace WelandTimeLogg.Migrations
                     b.ToTable("Department");
                 });
 
-            modelBuilder.Entity("WelandTimeLogg.Models.TimeEntries", b =>
+            modelBuilder.Entity("WelandTimeLogg.Models.Forms", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ActivityId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ActivityId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("TimeEntries");
+                    b.ToTable("Forms");
                 });
 
             modelBuilder.Entity("WelandTimeLogg.Models.User", b =>
@@ -119,23 +95,8 @@ namespace WelandTimeLogg.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("WelandTimeLogg.Models.ActivityHistory", b =>
+            modelBuilder.Entity("WelandTimeLogg.Models.ActivityLogEntries", b =>
                 {
-                    b.HasOne("WelandTimeLogg.Models.Activity", "Activity")
-                        .WithMany()
-                        .HasForeignKey("ActivityId");
-
-                    b.HasOne("WelandTimeLogg.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("WelandTimeLogg.Models.TimeEntries", b =>
-                {
-                    b.HasOne("WelandTimeLogg.Models.Activity", "Activity")
-                        .WithMany()
-                        .HasForeignKey("ActivityId");
-
                     b.HasOne("WelandTimeLogg.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");

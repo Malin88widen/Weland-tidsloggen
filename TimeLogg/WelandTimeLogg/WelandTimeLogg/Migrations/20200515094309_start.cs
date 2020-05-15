@@ -2,7 +2,7 @@
 
 namespace WelandTimeLogg.Migrations
 {
-    public partial class Testsidan : Migration
+    public partial class start : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

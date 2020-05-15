@@ -5,8 +5,8 @@ import HomePage from "./components/HomePage";
 import History from "./components/History";
 import Settings from './components/Settings';
 import FetchDataActivities from './components/FetchDataActivities';
-import FetchDataForm from './components/FetchDataForms';
-import FetchDataHistory from './components/FetchDataHistory';
+import FetchDataForms from './components/FetchDataForms';
+import FetchDataActivityLogEntries from './components/FetchDataActivityLogEntries';
 import FetchDataWorking from './components/FetchDataWorking';
 
 
@@ -16,7 +16,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
-import FetchDataForms from "./components/FetchDataForms";
+
 
 
 
@@ -30,7 +30,8 @@ class App extends Component {
                 <br />
                 <br />
                 <div><FetchDataForms /></div>
-                <div><FetchDataActivities /></div>
+             
+            
              
                 <br />
               
