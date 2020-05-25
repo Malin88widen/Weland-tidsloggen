@@ -8,7 +8,7 @@ namespace WelandTimeLogg.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Aktivities",
+                name: "Activities",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -17,7 +17,22 @@ namespace WelandTimeLogg.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Aktivities", x => x.Id);
+                    table.PrimaryKey("PK_Activities", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "activityLogSmalls",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    hour = table.Column<string>(nullable: true),
+                    name = table.Column<string>(nullable: true),
+                    createdNow = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_activityLogSmalls", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,40 +79,41 @@ namespace WelandTimeLogg.Migrations
                 name: "ActivityLogEntries",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    Hours = table.Column<decimal>(nullable: false),
-                    UserId = table.Column<int>(nullable: true),
-                    ActivitiesId = table.Column<int>(nullable: true)
+                    name = table.Column<string>(nullable: true),
+                    createdDate = table.Column<DateTime>(nullable: false),
+                    activityLastedHours = table.Column<int>(nullable: false),
+                    hours = table.Column<decimal>(type: "decimal(8)", nullable: false),
+                    userId = table.Column<int>(nullable: true),
+                    activitiesId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ActivityLogEntries", x => x.Id);
+                    table.PrimaryKey("PK_ActivityLogEntries", x => x.id);
                     table.ForeignKey(
-                        name: "FK_ActivityLogEntries_Aktivities_ActivitiesId",
-                        column: x => x.ActivitiesId,
-                        principalTable: "Aktivities",
+                        name: "FK_ActivityLogEntries_Activities_activitiesId",
+                        column: x => x.activitiesId,
+                        principalTable: "Activities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ActivityLogEntries_User_UserId",
-                        column: x => x.UserId,
+                        name: "FK_ActivityLogEntries_User_userId",
+                        column: x => x.userId,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ActivityLogEntries_ActivitiesId",
+                name: "IX_ActivityLogEntries_activitiesId",
                 table: "ActivityLogEntries",
-                column: "ActivitiesId");
+                column: "activitiesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ActivityLogEntries_UserId",
+                name: "IX_ActivityLogEntries_userId",
                 table: "ActivityLogEntries",
-                column: "UserId");
+                column: "userId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -106,13 +122,16 @@ namespace WelandTimeLogg.Migrations
                 name: "ActivityLogEntries");
 
             migrationBuilder.DropTable(
+                name: "activityLogSmalls");
+
+            migrationBuilder.DropTable(
                 name: "Department");
 
             migrationBuilder.DropTable(
                 name: "Forms");
 
             migrationBuilder.DropTable(
-                name: "Aktivities");
+                name: "Activities");
 
             migrationBuilder.DropTable(
                 name: "User");

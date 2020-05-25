@@ -2,26 +2,28 @@ import React, { Component } from "react";
 import axios from 'axios';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { withRouter } from 'react-router';
 
 
-class FetchDataActivityLogEntries extends React.Component {
+
+class FetchDataActivityLogEntries extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            Timmar: '',
-            Aktivitet: '',
-            sampleData: '',
+            hour: '',
+            name: '',
+           
+
         }
+        //this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount(prevProps) {
-        //axios.get("https://localhost:44383/api/activityLogEntries")
+        //axios.get("https://localhost:44325/api/activityLogEntries")
         //    .then(response => {
         //        console.log(response)
         //        this.setState({ posts: response.data })
-        fetch("api/activityLogEntries")
+        fetch("https://localhost:44325/api/activityLogEntries")
             .then(response => response.text())
             .then(data => {
                 this.setState({ sampleData: data });
@@ -64,17 +66,43 @@ class FetchDataActivityLogEntries extends React.Component {
     //}
 
 
-    handleChange = (e) => {
+    handleNameChange = (e) => {
+
         this.setState({ [e.target.name]: e.target.value })
+        console.log(e.target.name)
+        console.log(e.target.value)
+
     }
+
+    //handleHourChange = (e) => {
+
+    //    this.setState({ [e.target.name]: e.target.value })
+    //    console.log(e.target.name)
+    //    console.log(e.target.value)
+
+    //}
 
     handleSubmit = (e) => {
         e.preventDefault()
-        console.log(this.state)
-        axios.post('https://localhost:44383/api/activityLogEntries/post', this.state)
+        const data = this.state;
+        //data.append('Aktivitet', this.state.Aktivitet.value);
+        //data.append('Timmar', this.state.Timmar.value);
+        console.log(data)
+        axios.post('https://localhost:44325/api/activityLogEntries/post', this.state)
             .then(response => {
                 console.log(response)
                 window.location.reload();
+            })
+    }
+
+
+    handleSubmitSaveToHistory = (e) => {
+        e.preventDefault()
+        console.log(this.state)
+        axios.post('https://localhost:44325/history')
+            .then(response => {
+                console.log(response)
+
 
             })
             .catch(error => {
@@ -82,21 +110,6 @@ class FetchDataActivityLogEntries extends React.Component {
             })
 
     }
-
-    //handleSubmitSaveToHistory  = (e) => {
-    //    e.preventDefault()
-    //    console.log(this.state)
-    //    axios.post('https://localhost:44383/api/forms/postToHistory', this.state)
-    //            .then(response => {
-    //        console.log(response)
-    //window.location.reload();
-
-    //            })
-    //            .catch (error => {
-    //    console.log(error)
-    //})
-
-    //    }
 
     render() {
         const { Name } = this.state
@@ -111,11 +124,11 @@ class FetchDataActivityLogEntries extends React.Component {
                                 <Form>
                                     <Form.Group controlId="formGroupEmail">
                                         <Form.Label>Aktiviteten du arbetat med:</Form.Label>
-                                        <Form.Control type="text" name="Aktivitet" value={Name} onChange={this.handleChange} />
+                                        <Form.Control type="text" id="name" name="name" onChange={this.handleNameChange} />
                                     </Form.Group>
                                     <Form.Group controlId="formGroupPassword">
                                         <Form.Label>Dina arbetade timmar:</Form.Label>
-                                        <Form.Control type="number" name="Timmar" value={Name} onChange={this.handleChange} />
+                                        <Form.Control type="number" id="hour" name="hour" onChange={this.handleNameChange} />
                                     </Form.Group>
                                 </Form>
                                 <button type="submit" class="btn btn-info">Spara</button>
@@ -123,6 +136,8 @@ class FetchDataActivityLogEntries extends React.Component {
                         </form>
 
                     </div>
+
+
                     <br />
                     <div>
                         <div class="container">
@@ -131,7 +146,32 @@ class FetchDataActivityLogEntries extends React.Component {
                                 <form onSubmit={this.handleSubmitSaveToHistory}>
                                     <div class="form-group">
                                         <p>Historik:</p>
-                                        {this.state.sampleData/*.includes.DateTime.Today*/}
+                                        <table class="table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Aktivitet</th>
+
+
+
+                                                    <th>Timmar</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th>{this.state.name}</th>
+
+                                                    <th> </th>
+
+                                                    <th>{this.state.hours}</th>
+
+                                                    {this.state.sampleData}
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+
 
                                         <br />
                                         <br />
@@ -148,8 +188,11 @@ class FetchDataActivityLogEntries extends React.Component {
         );
     }
 }
-        export default FetchDataActivityLogEntries;
+
+export default FetchDataActivityLogEntries;
 
 
-    
+
+ //{this.state.sampleData/*.includes.DateTime.Today*/}
+
 

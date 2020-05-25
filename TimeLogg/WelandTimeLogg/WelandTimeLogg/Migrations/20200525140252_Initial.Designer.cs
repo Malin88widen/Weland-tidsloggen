@@ -10,7 +10,7 @@ using WelandTimeLogg.DataAccess;
 namespace WelandTimeLogg.Migrations
 {
     [DbContext(typeof(DefaultDataContext))]
-    [Migration("20200515112246_Initial")]
+    [Migration("20200525140252_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,38 +33,62 @@ namespace WelandTimeLogg.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Aktivities");
+                    b.ToTable("Activities");
                 });
 
             modelBuilder.Entity("WelandTimeLogg.Models.ActivityLogEntries", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ActivitiesId")
+                    b.Property<int?>("activitiesId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<int>("activityLastedHours")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("createdDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("Hours")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<decimal>("hours")
+                        .HasColumnType("decimal(8)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int?>("userId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
-                    b.HasIndex("ActivitiesId");
+                    b.HasIndex("activitiesId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("userId");
 
                     b.ToTable("ActivityLogEntries");
+                });
+
+            modelBuilder.Entity("WelandTimeLogg.Models.ActivityLogSmall", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("createdNow")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("hour")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("activityLogSmalls");
                 });
 
             modelBuilder.Entity("WelandTimeLogg.Models.Department", b =>
@@ -117,13 +141,13 @@ namespace WelandTimeLogg.Migrations
 
             modelBuilder.Entity("WelandTimeLogg.Models.ActivityLogEntries", b =>
                 {
-                    b.HasOne("WelandTimeLogg.Models.Activities", "Activities")
+                    b.HasOne("WelandTimeLogg.Models.Activities", "activities")
                         .WithMany()
-                        .HasForeignKey("ActivitiesId");
+                        .HasForeignKey("activitiesId");
 
-                    b.HasOne("WelandTimeLogg.Models.User", "User")
+                    b.HasOne("WelandTimeLogg.Models.User", "user")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("userId");
                 });
 #pragma warning restore 612, 618
         }

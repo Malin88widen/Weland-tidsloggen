@@ -12,7 +12,7 @@ class FetchDataForms extends React.Component {
     };
 
     async componentDidMount() {
-        const url = "https://localhost:44383/api/forms";
+        const url = "https://localhost:44383/api/forms/{id}";
 
         const response = await fetch(url);
         const data = await response.json();

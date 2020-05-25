@@ -23,7 +23,7 @@ namespace WelandTimeLogg.Controllers
         public IActionResult GetActivityLogEntriesResults()
         {
             var activityLogEntries = dataContext.ActivityLogEntries
-           .OrderByDescending(f => f.Name);
+           .OrderByDescending(f => f.createdDate);
 
             if (activityLogEntries == null)
             {
@@ -40,7 +40,8 @@ namespace WelandTimeLogg.Controllers
         [HttpGet("api/activityLogEntries/{Id}")]
         public IActionResult GetGetActivityLogEntriesResultById(int id)
         {
-            var activityLogEntries = dataContext.Forms.Where(f => f.Id == id);
+            ActivityLogEntries activityLogEntries = dataContext.ActivityLogEntries.FirstOrDefault(f => f.id == id);
+
 
 
             if (activityLogEntries == null)
@@ -52,35 +53,29 @@ namespace WelandTimeLogg.Controllers
         }
 
 
-
+        [Consumes ("application/json")]
         [HttpPost("api/activityLogEntries/post")]
-        public ActionResult PostActivityLogEntries(ActivityLogEntries activityLogEntries)
+        public ActionResult PostActivityLogEntries([FromBody]ActivityLogSmall activityLogSmall )
         {
-         
 
-          
+            var activityEntries = new ActivityLogSmall
+            {
+                createdNow = DateTime.Now,
+                hour = activityLogSmall.hour,
+                name = activityLogSmall.name
+            };
 
-                var ActivityAnswer = new ActivityLogEntries
-                {
-                    Name = "Doh", /*Få denna dynamisk!!*/
-                    CreatedDate = DateTime.Now,
-                    Hours = 5,
-                    ActivityLastedHours = 2,
+            //dataContext.ActivityLogEntries.Add(ActivityAnswer);
+            //dataContext.SaveChanges();
+            //return CreatedAtAction("GetActivityLogEntriesResults", ActivityAnswer);
 
-
-                };
-
-          
-
-            
-
-            dataContext.ActivityLogEntries.Add(ActivityAnswer);
+            dataContext.ActivityLogSmall.Add(activityLogSmall);
             dataContext.SaveChanges();
-            return CreatedAtAction("GetActivityLogEntriesResults", new { name = activityLogEntries.Name }, ActivityAnswer);
+            return CreatedAtAction("GetActivityLogEntriesResults", activityLogSmall);
         }
 
     }
 
-}
+}   
 
 

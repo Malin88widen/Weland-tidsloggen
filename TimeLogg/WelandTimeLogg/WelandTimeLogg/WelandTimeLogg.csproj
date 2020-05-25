@@ -31,11 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200515122048_typeDecimal.cs" />
-    <Compile Remove="Migrations\20200515122048_typeDecimal.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="TimeData\" />
   </ItemGroup>
 
