@@ -55,23 +55,35 @@ namespace WelandTimeLogg.Controllers
 
         [Consumes ("application/json")]
         [HttpPost("api/activityLogEntries/post")]
-        public ActionResult PostActivityLogEntries([FromBody]ActivityLogSmall activityLogSmall )
+        public ActionResult PostActivityLogEntries([FromBody]ActivityLogSmall input )
         {
 
-            var activityEntries = new ActivityLogSmall
-            {
-                createdNow = DateTime.Now,
-                hour = activityLogSmall.hour,
-                name = activityLogSmall.name
-            };
+            ActivityLogEntries activityLogDto;
 
+        
+
+            try
+            {
+
+
+                activityLogDto = new ActivityLogEntries
+                {
+                    createdDate = DateTime.Now,
+                    hours = decimal.Parse(input.hour.Replace(".","," )),
+                    name = input.name
+                };
+            }
+            catch (Exception)
+            {
+                return BadRequest("{\"messege\":\"Hours value not valid\"}");
+            }
             //dataContext.ActivityLogEntries.Add(ActivityAnswer);
             //dataContext.SaveChanges();
             //return CreatedAtAction("GetActivityLogEntriesResults", ActivityAnswer);
 
-            dataContext.ActivityLogSmall.Add(activityLogSmall);
+            dataContext.ActivityLogEntries.Add(activityLogDto);
             dataContext.SaveChanges();
-            return CreatedAtAction("GetActivityLogEntriesResults", activityLogSmall);
+            return CreatedAtAction("GetActivityLogEntriesResults", activityLogDto);
         }
 
     }

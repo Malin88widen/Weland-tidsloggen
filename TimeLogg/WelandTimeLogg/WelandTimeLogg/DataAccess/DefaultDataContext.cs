@@ -1,15 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using WelandTimeLogg.Models;
 
 namespace WelandTimeLogg.DataAccess
 {
     public class DefaultDataContext : DbContext
     {
-        public DefaultDataContext(DbContextOptions<DefaultDataContext> options) : base (options)
+        public DefaultDataContext(DbContextOptions<DefaultDataContext> options) : base(options)
         { }
 
         public DbSet<Activities> Activities { get; set; }
@@ -20,6 +16,6 @@ namespace WelandTimeLogg.DataAccess
         public DbSet<User> User { get; set; }
 
         public DbSet<Forms> Forms { get; set; }
-        public DbSet<ActivityLogSmall> ActivityLogSmall { get; set; }
+
     }
 }

@@ -12,7 +12,7 @@ class FetchDataActivityLogEntries extends Component {
         this.state = {
             hour: '',
             name: '',
-           
+            sampleData: '',
 
         }
         //this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,7 +27,7 @@ class FetchDataActivityLogEntries extends Component {
             .then(response => response.text())
             .then(data => {
                 this.setState({ sampleData: data });
-                console.log(data)
+                console.log("state", this.state.sampleData)
             })
             .catch(error => {
                 console.log(error)
@@ -159,20 +159,22 @@ class FetchDataActivityLogEntries extends Component {
                                             </thead>
                                             <tbody>
                                                 <tr>
+                                                    name
                                                     <th>{this.state.name}</th>
 
                                                     <th> </th>
-
-                                                    <th>{this.state.hours}</th>
-
+                                                    hour
+                                                    <th>{this.state.hour}</th>
+                                                    {this.state.sampleData((data, index) => {
+                                                        return <p>{data.name}</p>
+                                                    })}
+                                                
                                                     {this.state.sampleData}
-
                                                 </tr>
                                             </tbody>
                                         </table>
-
-
-
+                                       
+                                     
                                         <br />
                                         <br />
                                         <div>
