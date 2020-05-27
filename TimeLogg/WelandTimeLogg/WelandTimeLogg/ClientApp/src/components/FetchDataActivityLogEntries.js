@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import Form from "react-bootstrap/Form";
+import Table from "react-bootstrap/Table";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
+import ActivityLogEntries from './FetchDataHistory'
 
 
 
@@ -12,27 +17,35 @@ class FetchDataActivityLogEntries extends Component {
         this.state = {
             hour: '',
             name: '',
-            sampleData: '',
+            activityLogEntries: [],
 
         }
         //this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentDidMount(prevProps) {
-        //axios.get("https://localhost:44325/api/activityLogEntries")
-        //    .then(response => {
-        //        console.log(response)
-        //        this.setState({ posts: response.data })
-        fetch("https://localhost:44325/api/activityLogEntries")
-            .then(response => response.text())
-            .then(data => {
-                this.setState({ sampleData: data });
-                console.log("state", this.state.sampleData)
-            })
-            .catch(error => {
-                console.log(error)
-                this.setState({ errorMsg: 'Error retriving data' })
-            })
+    //componentDidMount(prevProps) {
+    //axios.get("https://localhost:44325/api/activityLogEntries")
+    //    .then(response => {
+    //        console.log(response)
+    //        this.setState({ posts: response.data })
+    async componentDidMount() {
+        const url = "https://localhost:44325/api/activityLogEntries";
+
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data);
+        this.setState({ activityLogEntries: data, loading: false });
+
+        //fetch("https://localhost:44325/api/activityLogEntries")
+        //    .then(response => response.text())
+        //    .then(data => {
+        //        this.setState({ sampleData: data });
+        //        console.log("state", this.state.sampleData)
+        //})
+        //  .catch(error => {
+        //      console.log(error)
+        //      this.setState({ errorMsg: 'Error retriving data' })
+        // })
 
 
 
@@ -116,9 +129,11 @@ class FetchDataActivityLogEntries extends Component {
 
         return (
             <div id="HomePageCSS">
-                <div class="container">
-                    <div class="row">
+                <Container>
+                    <Row>
+
                         <div class="col-sm-4"></div>
+
                         <form onSubmit={this.handleSubmit}>
                             <div class="form-group">
                                 <Form>
@@ -134,67 +149,106 @@ class FetchDataActivityLogEntries extends Component {
                                 <button type="submit" class="btn btn-info">Spara</button>
                             </div>
                         </form>
+                    </Row>
+                </Container>
+                <Container>
 
-                    </div>
+                    <h2>Historik</h2>
 
-
-                    <br />
-                    <div>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-4"></div>
-                                <form onSubmit={this.handleSubmitSaveToHistory}>
-                                    <div class="form-group">
-                                        <p>Historik:</p>
-                                        <table class="table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Aktivitet</th>
+                    <Row>
 
 
 
-                                                    <th>Timmar</th>
 
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    name
-                                                    <th>{this.state.name}</th>
+                        <Col>
+                            {this.state.activityLogEntries.map((form, id) => {
+                                return <p>{form.id}</p>
 
-                                                    <th> </th>
-                                                    hour
-                                                    <th>{this.state.hour}</th>
-                                                    {this.state.sampleData((data, index) => {
-                                                        return <p>{data.name}</p>
-                                                    })}
-                                                
-                                                    {this.state.sampleData}
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                       
-                                     
-                                        <br />
-                                        <br />
-                                        <div>
-                                            <button type="submit" class="btn btn-success">Spara till historik</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div >
+                            })}
+                        </Col>
+
+
+
+
+                        <Col>
+                            {this.state.activityLogEntries.map((form, id) => {
+                                return <p>{form.name}</p>
+
+                            })}
+                        </Col>
+
+
+
+                        <Col>
+                            {this.state.activityLogEntries.map((form, id) => {
+                                return <p>{form.hours}h</p>
+
+                            })}
+                        </Col>
+
+
+                    </Row>
+
+
+
+                </Container >
             </div>
         );
+
     }
 }
 
 export default FetchDataActivityLogEntries;
 
 
+                //    <center>
+                //        <Row>
+                //        <Col>Historik</Col>
+                //        </Row>
+                //    </center>
 
- //{this.state.sampleData/*.includes.DateTime.Today*/}
+                //<Row>
+
+                //    <div>
+                //        <Col>
+                //            {this.state.activityLogEntries.map((form, id) => {
+                //                return <p>{form.id}</p>
+
+                //            })}
+                //        </Col>
+                //    </div>
 
 
+                //    <div>
+                //        <Col>
+                //            {this.state.activityLogEntries.map((form, id) => {
+                //                return <p>{form.name}</p>
+
+                //            })}
+                //        </Col>
+                //    </div>
+
+                //    <div>
+                //        <Col>
+                //            {this.state.activityLogEntries.map((form, id) => {
+                //                return <p>{form.hours}</p>
+
+                //            })}
+                //        </Col>
+                //    </div>
+
+                //</Row>
+
+
+
+//<tbody>
+//    <tr>
+//        <ul>
+//            {this.state.activityLogEntries.map((form, id) => {
+//                return <li key={id}>{form.name}</li>;
+//            })}
+
+
+//        </ul>
+//    </tr>
+//</tbody>

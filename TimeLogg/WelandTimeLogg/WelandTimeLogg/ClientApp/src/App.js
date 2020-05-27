@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import NavBar from "./components/navbarWelands";
 import "./App.css";
 import HomePage from "./components/HomePage";
-import History from "./components/History";
+
 import Settings from './components/Settings';
-import FetchDataActivities from './components/FetchDataActivityLogEntries';
+import FetchDataActivitiyLogEntries from './components/FetchDataActivityLogEntries';
 import FetchDataForm from './components/FetchDataForms';
 import FetchDataHistory from './components/FetchDataHistory';
 import FetchDataWorking from './components/FetchDataWorking';
@@ -17,7 +17,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
-import FetchDataForms from "./components/FetchDataForms";
+
 
 
 
@@ -30,7 +30,7 @@ class App extends Component {
                 <div><NavBar /></div>
                 <br />
                 <br />
-                <div><FetchDataActivities /></div>
+
 
                 <br />
 
