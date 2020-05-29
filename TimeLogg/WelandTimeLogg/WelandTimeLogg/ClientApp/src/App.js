@@ -26,17 +26,7 @@ class App extends Component {
     render() {
         return (
             <div>
-
                 <div><NavBar /></div>
-                <br />
-                <br />
-
-
-                <br />
-
-
-
-
             </div>
         );
     }

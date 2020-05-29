@@ -20,14 +20,8 @@ class FetchDataActivityLogEntries extends Component {
             activityLogEntries: [],
 
         }
-        //this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    //componentDidMount(prevProps) {
-    //axios.get("https://localhost:44325/api/activityLogEntries")
-    //    .then(response => {
-    //        console.log(response)
-    //        this.setState({ posts: response.data })
     async componentDidMount() {
         const url = "https://localhost:44325/api/activityLogEntries";
 
@@ -35,49 +29,7 @@ class FetchDataActivityLogEntries extends Component {
         const data = await response.json();
         console.log(data);
         this.setState({ activityLogEntries: data, loading: false });
-
-        //fetch("https://localhost:44325/api/activityLogEntries")
-        //    .then(response => response.text())
-        //    .then(data => {
-        //        this.setState({ sampleData: data });
-        //        console.log("state", this.state.sampleData)
-        //})
-        //  .catch(error => {
-        //      console.log(error)
-        //      this.setState({ errorMsg: 'Error retriving data' })
-        // })
-
-
-
-        //axios.get("https://localhost:44383/api/forms/test")
-        //    .then(response => {
-        //        console.log(response)
-        //        this.setState({ posts: response.data })
-        //    })
-        //    .catch(error => {
-        //        console.log(error)
-        //        this.setState({ errorMsg: 'Error retriving data' })
-        //    })
-        //axios.get("https://localhost:44383/FetchDataActivities")
-        //    .then(response => {
-        //        console.log(response)
-        //        this.setState({ response: response.data })
-        //    })
-        //    .catch(error => {
-        //        console.log(error)
-        //        this.setState({ errorMsg: 'Error retriving data' })
-        //    })
     }
-
-    //displayTemp() {
-    //    fetch("api/forms")
-    //        .then(response => response.text())
-    //        .then(data => {
-    //            this.setState({ temp: data });
-
-    //        });
-    //}
-
 
     handleNameChange = (e) => {
 
@@ -87,19 +39,9 @@ class FetchDataActivityLogEntries extends Component {
 
     }
 
-    //handleHourChange = (e) => {
-
-    //    this.setState({ [e.target.name]: e.target.value })
-    //    console.log(e.target.name)
-    //    console.log(e.target.value)
-
-    //}
-
     handleSubmit = (e) => {
         e.preventDefault()
         const data = this.state;
-        //data.append('Aktivitet', this.state.Aktivitet.value);
-        //data.append('Timmar', this.state.Timmar.value);
         console.log(data)
         axios.post('https://localhost:44325/api/activityLogEntries/post', this.state)
             .then(response => {
@@ -109,31 +51,27 @@ class FetchDataActivityLogEntries extends Component {
     }
 
 
-    handleSubmitSaveToHistory = (e) => {
-        e.preventDefault()
-        console.log(this.state)
-        axios.post('https://localhost:44325/history')
-            .then(response => {
-                console.log(response)
+    //handleSubmitSaveToHistory = (e) => {
+    //    e.preventDefault()
+    //    console.log(this.state)
+    //    axios.post('https://localhost:44325/history')
+    //        .then(response => {
+    //            console.log(response)
 
 
-            })
-            .catch(error => {
-                console.log(error)
-            })
+    //        })
+    //        .catch(error => {
+    //            console.log(error)
+    //        })
 
-    }
+    //}
 
     render() {
-        const { Name } = this.state
-
         return (
             <div id="HomePageCSS">
                 <Container>
                     <Row>
-
                         <div class="col-sm-4"></div>
-
                         <form onSubmit={this.handleSubmit}>
                             <div class="form-group">
                                 <Form>
@@ -152,49 +90,48 @@ class FetchDataActivityLogEntries extends Component {
                     </Row>
                 </Container>
                 <Container>
-
                     <h2>Historik</h2>
+                    
+               
+                    <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Aktivitet</th>
+                            <th>Timmar</th>
+                            <th>Datum</th>
 
-                    <Row>
-
-
-
-
-                        <Col>
-                            {this.state.activityLogEntries.map((form, id) => {
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> <div> {this.state.activityLogEntries.map((form, id) => {
                                 return <p>{form.id}</p>
 
                             })}
-                        </Col>
-
-
-
-
-                        <Col>
-                            {this.state.activityLogEntries.map((form, id) => {
+                                </div></td>
+                            <td> <div>{this.state.activityLogEntries.map((form, id) => {
                                 return <p>{form.name}</p>
 
                             })}
-                        </Col>
-
-
-
-                        <Col>
-                            {this.state.activityLogEntries.map((form, id) => {
+                                </div></td>
+                            <td> <div>{this.state.activityLogEntries.map((form, id) => {
                                 return <p>{form.hours}h</p>
 
                             })}
-                        </Col>
+                                </div></td>
+                                <td> <div>{this.state.activityLogEntries.map((form, id) => {
+                                    return <p>{form.createdDate}h</p>
 
+                            })}
+                            </div></td>
+                        </tr>
 
-                    </Row>
-
-
-
+                    </tbody>
+                </Table>
                 </Container >
             </div>
         );
-
     }
 }
 

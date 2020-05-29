@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import Form from './FetchDataActivityLogEntries'
-import Table from './FetchDataActivityLogEntries'
+import Table from "react-bootstrap/Table";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -22,8 +22,6 @@ class FetchDataHistory extends React.Component {
         const data = await response.json();
         console.log(data);
         this.setState({ activityLogEntries: data, loading: false });
-
-
     }
 
     ListOfNames = () => {
@@ -34,62 +32,52 @@ class FetchDataHistory extends React.Component {
 
     }
 
-    
-     
-
-render() {
-   
+    render() {
         return (
             <Container>
-
-
-
-
                 <h2>Historik</h2>
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Aktivitet</th>
+                            <th>Timmar</th>
+                            <th>Datum</th>
 
-                <Row>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> <div> {this.state.activityLogEntries.map((form, id) => {
+                                return <p>{form.id}</p>
 
+                            })}
+                            </div></td>
+                            <td> <div>{this.state.activityLogEntries.map((form, id) => {
+                                return <p>{form.name}</p>
 
+                            })}
+                            </div></td>
+                            <td> <div>{this.state.activityLogEntries.map((form, id) => {
+                                return <p>{form.hours}h</p>
 
+                            })}
+                            </div></td>
+                            <td> <div>{this.state.activityLogEntries.map((form, id) => {
+                                return <p>{form.createdDate}h</p>
 
-                    <Col>
-                        {this.state.activityLogEntries.map((form, id) => {
-                            return <p>{form.id}</p>
+                            })}
+                            </div></td>
+                        </tr>
 
-                        })}
-                    </Col>
-
-
-
-
-                    <Col>
-                        {this.state.activityLogEntries.map((form, id) => {
-                            return <p>{form.name}</p>
-
-                        })}
-                    </Col>
-
-
-
-                    <Col>
-                        {this.state.activityLogEntries.map((form, id) => {
-                            return <p>{form.hours} h</p>
-
-                        })}
-                    </Col>
-
-
-                </Row>
-
-            
-                <div>
-                    <button type="submit"  class="btn btn-info">Skriv ut som Excel</button>
-                </div>
-                <br />
+                    </tbody>
+                    </Table>
+                <button type="submit" class="btn btn-info">Skriv ut som Excel</button>
+                
+                    
+               
             </Container >
-           
         );
-
     }
 }
 

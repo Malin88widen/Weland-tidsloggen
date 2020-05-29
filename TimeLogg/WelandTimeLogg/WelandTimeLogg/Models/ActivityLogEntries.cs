@@ -22,5 +22,7 @@ namespace WelandTimeLogg.Models
         public User user { get; set; }
 
         public Activities activities { get; set; }
+
+    
     }
 }
