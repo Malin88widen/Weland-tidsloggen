@@ -60,16 +60,10 @@ namespace WelandTimeLogg.Controllers
 
             ActivityLogEntries activityLogDto;
 
-          
-
             try
             {
-
-
                 activityLogDto = new ActivityLogEntries
                 {
-                   
-
                     createdDate = DateTime.Now,
                     hours = decimal.Parse(input.hour.Replace(".","," )),
                     name = input.name

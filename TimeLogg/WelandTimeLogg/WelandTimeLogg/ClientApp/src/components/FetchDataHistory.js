@@ -7,7 +7,79 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
 
+
+import ReactExport from "react-export-excel";
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
+const dataSet1 = [
+    {
+        name: "Johson",
+        amount: 30000,
+        sex: 'M',
+        is_married: true
+    },
+    {
+        name: "Monika",
+        amount: 355000,
+        sex: 'F',
+        is_married: false
+    },
+    {
+        name: "John",
+        amount: 250000,
+        sex: 'M',
+        is_married: false
+    },
+    {
+        name: "Josef",
+        amount: 450500,
+        sex: 'M',
+        is_married: true
+    }
+];
+
+const dataSet2 = [
+    {
+        name: "Johnson",
+        total: 25,
+        remainig: 16
+    },
+    {
+        name: "Josef",
+        total: 25,
+        remainig: 7
+    }
+];
+
+const multiDataSet = [
+    {
+        columns: ["Name", "Salary", "Sex"],
+        data: [
+            ["Johnson", 30000, "Male"],
+            ["Monika", 355000, "Female"],
+            ["Konstantina", 20000, "Female"],
+            ["John", 250000, "Male"],
+            ["Josef", 450500, "Male"],
+        ]
+    },
+    {
+        xSteps: 1, // Will start putting cell with 1 empty cell on left most
+        ySteps: 5, //will put space of 5 rows,
+        columns: ["Name", "Department"],
+        data: [
+            ["Johnson", "Finance"],
+            ["Monika", "IT"],
+            ["Konstantina", "IT Billing"],
+            ["John", "HR"],
+            ["Josef", "Testing"],
+        ]
+    }
+];
+
 class FetchDataHistory extends React.Component {
+  
+
     state = {
         loading: true,
         activityLogEntries: [],
@@ -24,13 +96,7 @@ class FetchDataHistory extends React.Component {
         this.setState({ activityLogEntries: data, loading: false });
     }
 
-    ListOfNames = () => {
 
-        this.state.activityLogEntries.map((form, id) => {
-            return <li>{form.name}</li>;
-        })
-
-    }
 
     render() {
         return (
@@ -72,10 +138,27 @@ class FetchDataHistory extends React.Component {
 
                     </tbody>
                     </Table>
-                <button type="submit" class="btn btn-info">Skriv ut som Excel</button>
-                
-                    
+
+
+
+
                
+                <ExcelFile>
+                    <ExcelSheet data={dataSet1} name="Employees">
+                        <ExcelColumn label="Name" value="name" />
+                        <ExcelColumn label="Wallet Money" value="amount" />
+                        <ExcelColumn label="Gender" value="sex" />
+                        <ExcelColumn label="Marital Status"
+                            value={(col) => col.is_married ? "Married" : "Single"} />
+                    </ExcelSheet>
+                    <ExcelSheet data={dataSet2} name="Leaves">
+                        <ExcelColumn label="Name" value="name" />
+                        <ExcelColumn label="Total Leaves" value="total" />
+                        <ExcelColumn label="Remaining Leaves" value="remaining" />
+                    </ExcelSheet>
+                </ExcelFile>
+
+             
             </Container >
         );
     }
@@ -83,6 +166,27 @@ class FetchDataHistory extends React.Component {
 
 
 export default FetchDataHistory;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                //<button type="submit" class="btn btn-info">Skriv ut som Excel</button>
+   //<ExcelFile>
+                //    <ExcelSheet dataSet={multiDataSet} name="Organization" />
+                //</ExcelFile>
+
+
 
 
 
