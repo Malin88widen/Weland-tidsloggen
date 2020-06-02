@@ -14,10 +14,10 @@ const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 const dataSet1 = [
     {
-        name: "Johson",
-        amount: 30000,
-        sex: 'M',
-        is_married: true
+        aktivitet: "Dokumentation",
+        timmar: 3,
+        datum: "2020-06-02",
+       
     },
     {
         name: "Monika",
@@ -78,7 +78,7 @@ const multiDataSet = [
 ];
 
 class FetchDataHistory extends React.Component {
-  
+
 
     state = {
         loading: true,
@@ -137,20 +137,20 @@ class FetchDataHistory extends React.Component {
                         </tr>
 
                     </tbody>
-                    </Table>
+                </Table>
 
 
 
 
-               
+
                 <ExcelFile>
                     <ExcelSheet data={dataSet1} name="Employees">
-                        <ExcelColumn label="Name" value="name" />
-                        <ExcelColumn label="Wallet Money" value="amount" />
-                        <ExcelColumn label="Gender" value="sex" />
-                        <ExcelColumn label="Marital Status"
-                            value={(col) => col.is_married ? "Married" : "Single"} />
+                        <ExcelColumn label="Aktivitet" value="aktivitet" />
+                        <ExcelColumn label="Timmar" value="timmar" />
+                        <ExcelColumn label="Datum" value="datum" />
                     </ExcelSheet>
+
+
                     <ExcelSheet data={dataSet2} name="Leaves">
                         <ExcelColumn label="Name" value="name" />
                         <ExcelColumn label="Total Leaves" value="total" />
@@ -158,7 +158,7 @@ class FetchDataHistory extends React.Component {
                     </ExcelSheet>
                 </ExcelFile>
 
-             
+
             </Container >
         );
     }
