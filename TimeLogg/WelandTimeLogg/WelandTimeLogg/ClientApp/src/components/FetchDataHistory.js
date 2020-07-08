@@ -5,167 +5,175 @@ import Table from "react-bootstrap/Table";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-
-
-
 import ReactExport from "react-export-excel";
-const ExcelFile = ReactExport.ExcelFile;
-const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
-const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
-const dataSet1 = [
-    {
-        aktivitet: "Dokumentation",
-        timmar: 3,
-        datum: "2020-06-02",
-       
-    },
-    {
-        name: "Monika",
-        amount: 355000,
-        sex: 'F',
-        is_married: false
-    },
-    {
-        name: "John",
-        amount: 250000,
-        sex: 'M',
-        is_married: false
-    },
-    {
-        name: "Josef",
-        amount: 450500,
-        sex: 'M',
-        is_married: true
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
+import Button from 'react-bootstrap/Button';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel'; 
+import ActivityLogEntries from './FetchDataHistory'
+
+
+    class FetchDataHistory extends Component {
+
+        constructor(props) {
+            super(props)
+
+            this.state = {
+                hour: '',
+                name: '',
+                activityLogEntries: [],
+                createdDate: [],
+                loading: true,
+                person: null
+
+            }
+
+        }
+
+        async componentDidMount() {
+            const url = "https://localhost:44325/api/activityLogEntries";
+
+            const response = await fetch(url);
+            const data = await response.json();
+            console.log(data);
+            this.setState({ activityLogEntries: data, loading: false });
+        }
+
+        render() {
+
+            var createdDateOutput = this.state.activityLogEntries.map((form, id) =>
+                <p>{(new Date(form.createdDate).toLocaleDateString())}</p>
+            );
+
+            var createdHoursOutput = this.state.activityLogEntries.map((form, id) => {
+                return <p>{form.hours} h</p>
+            });
+
+            var createdActivityNameOutput = this.state.activityLogEntries.map((form, id) => {
+                return <p>{form.name}</p>
+            });
+         
+            return (
+                <Container>
+                    <h2>Historik</h2>
+
+                    <Table id='emp' class='table' striped bordered hover>
+                        <thead>
+                            <tr>
+
+                                <th>Aktivitet</th>
+                                <th>Timmar</th>
+                                <th>Datum</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr >
+                                <td key={createdActivityNameOutput}>
+                                    <span>{createdActivityNameOutput}</span>
+                                </td>
+                                <td>
+                                    <span>{createdHoursOutput}</span>
+                                </td>
+                                <td>
+                                    <span>{createdDateOutput}</span>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </Table>
+                    <div>
+                        <ReactHTMLTableToExcel
+                            className="btn btn-info"
+                            table="emp"
+                            filename="ReportExcel"
+                            sheet="Sheet"
+                            buttonText="Export excel" />
+                    </div>
+   
+                </Container >
+
+            )
+        }
     }
-];
-
-const dataSet2 = [
-    {
-        name: "Johnson",
-        total: 25,
-        remainig: 16
-    },
-    {
-        name: "Josef",
-        total: 25,
-        remainig: 7
-    }
-];
-
-const multiDataSet = [
-    {
-        columns: ["Name", "Salary", "Sex"],
-        data: [
-            ["Johnson", 30000, "Male"],
-            ["Monika", 355000, "Female"],
-            ["Konstantina", 20000, "Female"],
-            ["John", 250000, "Male"],
-            ["Josef", 450500, "Male"],
-        ]
-    },
-    {
-        xSteps: 1, // Will start putting cell with 1 empty cell on left most
-        ySteps: 5, //will put space of 5 rows,
-        columns: ["Name", "Department"],
-        data: [
-            ["Johnson", "Finance"],
-            ["Monika", "IT"],
-            ["Konstantina", "IT Billing"],
-            ["John", "HR"],
-            ["Josef", "Testing"],
-        ]
-    }
-];
-
-class FetchDataHistory extends React.Component {
-
-
-    state = {
-        loading: true,
-        activityLogEntries: [],
-        person: null
-
-    };
-
-    async componentDidMount() {
-        const url = "https://localhost:44325/api/activityLogEntries";
-
-        const response = await fetch(url);
-        const data = await response.json();
-        console.log(data);
-        this.setState({ activityLogEntries: data, loading: false });
-    }
-
-
-
-    render() {
-        return (
-            <Container>
-                <h2>Historik</h2>
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Aktivitet</th>
-                            <th>Timmar</th>
-                            <th>Datum</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td> <div> {this.state.activityLogEntries.map((form, id) => {
-                                return <p>{form.id}</p>
-
-                            })}
-                            </div></td>
-                            <td> <div>{this.state.activityLogEntries.map((form, id) => {
-                                return <p>{form.name}</p>
-
-                            })}
-                            </div></td>
-                            <td> <div>{this.state.activityLogEntries.map((form, id) => {
-                                return <p>{form.hours}h</p>
-
-                            })}
-                            </div></td>
-                            <td> <div>{this.state.activityLogEntries.map((form, id) => {
-                                return <p>{form.createdDate}h</p>
-
-                            })}
-                            </div></td>
-                        </tr>
-
-                    </tbody>
-                </Table>
-
-
-
-
-
-                <ExcelFile>
-                    <ExcelSheet data={dataSet1} name="Employees">
-                        <ExcelColumn label="Aktivitet" value="aktivitet" />
-                        <ExcelColumn label="Timmar" value="timmar" />
-                        <ExcelColumn label="Datum" value="datum" />
-                    </ExcelSheet>
-
-
-                    <ExcelSheet data={dataSet2} name="Leaves">
-                        <ExcelColumn label="Name" value="name" />
-                        <ExcelColumn label="Total Leaves" value="total" />
-                        <ExcelColumn label="Remaining Leaves" value="remaining" />
-                    </ExcelSheet>
-                </ExcelFile>
-
-
-            </Container >
-        );
-    }
-}
 
 
 export default FetchDataHistory;
+
+
+                    //<ExcelFile>
+                    //    <ExcelSheet data={dataSet1} name="WelandTimeLogg">
+                    //        <ExcelColumn label="Aktivitet" value="aktivitet" />
+                    //        <ExcelColumn label="Timmar" value="timmar" />
+                    //        <ExcelColumn label="Datum" value="datum" />
+                    //    </ExcelSheet>
+
+                    //</ExcelFile>
+
+
+//export const FormData = ({ formData }) => {
+
+//    const FormDataRow = (form, index) => {
+
+//        return (
+//            <tr key={index} className='even'>
+//                <td> <div>{this.state.activityLogEntries.map((form, id) => {
+//                    return <p>{form.name}</p>
+
+//                })}
+//                </div></td>
+//                <td> <div>{this.state.activityLogEntries.map((form, id) => {
+//                    return <p>{form.hours}h</p>
+
+//                })}
+//                </div></td>
+           
+
+//            </tr>
+//        )
+//    }
+
+//    const FormDataToExcel = formData.map((form, id) => FormDataRow(form, id))
+
+//    const tableHeader = <thead className='bgvi'>
+//        <tr>
+//            <th>Aktivitet</th>
+//            <th>Timmar</th>
+//            <th>Datum</th>
+//        </tr>
+//    </thead>
+
+//    return (
+//        <Table striped bordered hover>
+//            {tableHeader}
+//            <tbody>
+//                {FormDataToExcel}
+//            </tbody>
+//        </Table>
+//    )
+//}
+
+//export const ExportCSV = ({ csvData, fileName }) => {
+
+//    const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+//    const fileExtension = '.xlsx';
+
+//    const exportToCSV = (csvData, fileName) => {
+//        const ws = XLSX.utils.json_to_sheet(csvData);
+//        const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+//        const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+//        const data = new Blob([excelBuffer], { type: fileType });
+//        FileSaver.saveAs(data, fileName + fileExtension);
+//    }
+
+//    return (
+//    <Button variant="warning" onClick={(e) => exportToCSV(csvData, fileName)}>Export</Button>
+//        )
+//}
+
+
+   
+
 
 
 

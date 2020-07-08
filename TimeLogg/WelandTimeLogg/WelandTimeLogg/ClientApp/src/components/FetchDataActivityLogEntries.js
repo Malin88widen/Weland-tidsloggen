@@ -10,6 +10,8 @@ import ActivityLogEntries from './FetchDataHistory'
 
 
 
+
+
 class FetchDataActivityLogEntries extends Component {
     constructor(props) {
         super(props)
@@ -18,8 +20,10 @@ class FetchDataActivityLogEntries extends Component {
             hour: '',
             name: '',
             activityLogEntries: [],
+            createdDate: []
 
         }
+
     }
 
     async componentDidMount() {
@@ -51,6 +55,7 @@ class FetchDataActivityLogEntries extends Component {
     }
 
 
+
     //handleSubmitSaveToHistory = (e) => {
     //    e.preventDefault()
     //    console.log(this.state)
@@ -67,6 +72,19 @@ class FetchDataActivityLogEntries extends Component {
     //}
 
     render() {
+
+        var cts = this.state.activityLogEntries.map((form, id) =>
+            <p>{(new Date(form.createdDate).toLocaleDateString())}</p>
+        );
+
+
+        var dateCount = this.state.activityLogEntries.map((form, id) =>
+            <p>{form.createdDate}</p>
+        );
+
+  
+
+
         return (
             <div id="HomePageCSS">
                 <Container>
@@ -91,52 +109,94 @@ class FetchDataActivityLogEntries extends Component {
                 </Container>
                 <Container>
                     <h2>Historik</h2>
-                    
-               
                     <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Aktivitet</th>
-                            <th>Timmar</th>
-                            <th>Datum</th>
+                        <thead>
+                            <tr>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td> <div> {this.state.activityLogEntries.map((form, id) => {
-                                return <p>{form.id}</p>
+                                <th>Aktivitet</th>
+                                <th>Timmar</th>
+                                <th>Datum</th>
 
-                            })}
-                                </div></td>
-                            <td> <div>{this.state.activityLogEntries.map((form, id) => {
-                                return <p>{form.name}</p>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td> <div>{this.state.activityLogEntries.map((form, id) => {
+                                    return <p>{form.name}</p>
 
-                            })}
-                                </div></td>
-                            <td> <div>{this.state.activityLogEntries.map((form, id) => {
-                                return <p>{form.hours}h</p>
-
-                            })}
+                                })}
                                 </div></td>
                                 <td> <div>{this.state.activityLogEntries.map((form, id) => {
-                                    return <p>{form.createdDate}h</p>
+                                    return <p>{form.hours}h</p>
 
-                            })}
-                            </div></td>
-                        </tr>
+                                })}
+                                </div></td>
+                                <td>
+                                    <span>{cts}</span>
+                                </td>
+                            </tr>
 
-                    </tbody>
-                </Table>
+                        </tbody>
+                    </Table>
+
                 </Container >
+             
             </div>
-        );
+
+
+        )
     }
-}
+};
+
+
+
+
 
 export default FetchDataActivityLogEntries;
 
+
+          //<thead>
+          //                  <tr>
+
+          //                      <th>Aktivitet</th>
+          //                      <th>Timmar</th>
+          //                      <th>Datum</th>
+
+
+          //                  </tr>
+          //              </thead>
+          //              <tbody>
+          //                  <tr key={this.state.activityLogEntries.form}>
+          //                      <td> <div>{this.state.activityLogEntries.map((form, id) => {
+          //                          return <p>{form.name}</p>
+
+          //                      })}
+          //                      </div></td>
+          //                      <td> <div>{this.state.activityLogEntries.map((form, id) => {
+          //                          return <p>{form.hours}h</p>
+
+          //                      })}
+          //                      </div></td>
+          //                      <td>
+
+
+
+
+          //                      </td>
+          //                      //{numberFormat}
+          //                      //   {dateCount}
+
+
+
+
+
+
+
+
+          //                  </tr>
+
+          //              </tbody>
+          //          </Table>
 
                 //    <center>
                 //        <Row>

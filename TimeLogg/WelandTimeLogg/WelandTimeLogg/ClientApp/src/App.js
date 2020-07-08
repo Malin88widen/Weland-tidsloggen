@@ -8,6 +8,7 @@ import FetchDataActivitiyLogEntries from './components/FetchDataActivityLogEntri
 import FetchDataForm from './components/FetchDataForms';
 import FetchDataHistory from './components/FetchDataHistory';
 import FetchDataWorking from './components/FetchDataWorking';
+
 import { render } from 'react-dom';
 
 
@@ -21,13 +22,17 @@ import {
 
 
 
+
+
 class App extends Component {
 
     render() {
         return (
             <div>
                 <div><NavBar /></div>
+             
             </div>
+           
         );
     }
 }
@@ -35,6 +40,21 @@ class App extends Component {
 
 
 
-
 export default App;
 
+
+               
+
+
+//<div className="App">
+//    <Header />
+//    <div className="row">
+//        <div className="col-md-8">
+//            <h2>Customers</h2>
+//        </div>
+//        <div className="col-md-4 center">
+//            <ExportCSV csvData={this.state.data} fileName={this.state.fileName} />
+//        </div>
+//    </div>
+//    <Customers customers={this.customers()} />
+//</div>
