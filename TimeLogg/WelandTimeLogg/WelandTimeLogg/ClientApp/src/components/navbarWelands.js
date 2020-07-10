@@ -16,8 +16,8 @@ const NavBar = () => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
-                            <Link to="/settings">Settings</Link>
-                            <Link to="/FetchDataHistory">History</Link>
+                            <Link id='settingsLink' to="/settings">Settings </Link>
+                            <Link to="/FetchDataHistory"> History</Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

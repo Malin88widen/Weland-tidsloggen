@@ -7,6 +7,10 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import ActivityLogEntries from './FetchDataHistory'
+import NameList from "./Form";
+import ActivityList from "./Form";
+
+
 
 
 
@@ -17,13 +21,19 @@ class FetchDataActivityLogEntries extends Component {
         this.state = {
             hour: '',
             name: '',
+            project: '',
+            description: '',
             activityLogEntries: [],
+            createdDate: []
+
 
         }
+
+
     }
 
     async componentDidMount() {
-        const url = "https://localhost:44325/api/activityLogEntries";
+        const url = "https://localhost:44325/api/activityLogEntriesFrontPage";
 
         const response = await fetch(url);
         const data = await response.json();
@@ -51,6 +61,7 @@ class FetchDataActivityLogEntries extends Component {
     }
 
 
+
     //handleSubmitSaveToHistory = (e) => {
     //    e.preventDefault()
     //    console.log(this.state)
@@ -67,6 +78,36 @@ class FetchDataActivityLogEntries extends Component {
     //}
 
     render() {
+
+
+
+
+        //var dateCount = this.state.activityLogEntries.map((form, id) =>
+        //    <p>{form.createdDate}</p>
+        //);
+
+
+        //var createdDateOutput = this.state.activityLogEntries.map((form, id) =>
+        //    <p>{(new Date(form.createdDate).toLocaleDateString())}</p>
+        //);
+
+        //var createdHoursOutput = this.state.activityLogEntries.map((form, id) => {
+        //    return <p key={id}>{form.hours} h</p>
+        //});
+
+        //var createdActivityNameOutput = this.state.activityLogEntries.map((form, id) => {
+        //    return <p key={id}>{form.name}</p>
+        //});
+        //var createdDescriptionOutput = this.state.activityLogEntries.map((form, id) => {
+        //    return <p key={id}>{form.description}</p>
+        //});
+        //var createdProjectOutput = this.state.activityLogEntries.map((form, id) => {
+        //    return <p key={id}>{form.project}</p>
+        //});
+
+
+
+
         return (
             <div id="HomePageCSS">
                 <Container>
@@ -75,13 +116,27 @@ class FetchDataActivityLogEntries extends Component {
                         <form onSubmit={this.handleSubmit}>
                             <div class="form-group">
                                 <Form>
+                                    <Row>
+                                        <Col>
+                                            <Form.Group controlId="formGroupEmail">
+                                                <Form.Label>Arbete:</Form.Label>
+                                                <Form.Control type="text" id="name" name="name" onChange={this.handleNameChange} />
+                                            </Form.Group>
+                                        </Col>
+                                        <Col>
+                                            <Form.Group controlId="formGroupPassword">
+                                                <Form.Label>Dina arbetade timmar:</Form.Label>
+                                                <Form.Control type="number" id="hour" name="hour" onChange={this.handleNameChange} />
+                                            </Form.Group>
+                                        </Col>
+                                    </Row>
                                     <Form.Group controlId="formGroupEmail">
-                                        <Form.Label>Aktiviteten du arbetat med:</Form.Label>
-                                        <Form.Control type="text" id="name" name="name" onChange={this.handleNameChange} />
+                                        <Form.Label>Projekt (valfritt):</Form.Label>
+                                        <Form.Control type="text" id="project" name="project" onChange={this.handleNameChange} />
                                     </Form.Group>
-                                    <Form.Group controlId="formGroupPassword">
-                                        <Form.Label>Dina arbetade timmar:</Form.Label>
-                                        <Form.Control type="number" id="hour" name="hour" onChange={this.handleNameChange} />
+                                    <Form.Group controlId="formGroupEmail">
+                                        <Form.Label>Beskrivning:</Form.Label>
+                                        <Form.Control as="textarea" rows="3" type="text" id="description" name="description" onChange={this.handleNameChange} />
                                     </Form.Group>
                                 </Form>
                                 <button type="submit" class="btn btn-info">Spara</button>
@@ -91,52 +146,96 @@ class FetchDataActivityLogEntries extends Component {
                 </Container>
                 <Container>
                     <h2>Historik</h2>
-                    
-               
-                    <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Aktivitet</th>
-                            <th>Timmar</th>
-                            <th>Datum</th>
+                    <Table striped bordered>
+                        <thead>
+                            <tr>
+                                <th>Arbete</th>
+                                <th>Timmar</th>
+                                <th>Beskrivning</th>
+                                <th>Datum</th>
+                                <th>Projekt</th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td> <div> {this.state.activityLogEntries.map((form, id) => {
-                                return <p>{form.id}</p>
-
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.state.activityLogEntries.map(function (id) {
+                                return (
+                                    <tr key={id}>
+                                        <td>{id.name}</td>
+                                        <td>{id.hours} h</td>
+                                        <td> {id.description}</td>
+                                        <td>{(new Date(id.createdDate).toLocaleDateString())}</td>
+                                        <td>{id.project}</td>
+                                    </tr>
+                                )
                             })}
-                                </div></td>
-                            <td> <div>{this.state.activityLogEntries.map((form, id) => {
-                                return <p>{form.name}</p>
-
-                            })}
-                                </div></td>
-                            <td> <div>{this.state.activityLogEntries.map((form, id) => {
-                                return <p>{form.hours}h</p>
-
-                            })}
-                                </div></td>
-                                <td> <div>{this.state.activityLogEntries.map((form, id) => {
-                                    return <p>{form.createdDate}h</p>
-
-                            })}
-                            </div></td>
-                        </tr>
-
-                    </tbody>
-                </Table>
+                        </tbody>
+                    </Table>
                 </Container >
             </div>
-        );
+        )
     }
-}
+};
+
+
+
+
 
 export default FetchDataActivityLogEntries;
 
+
+                    //<NameList />
+                    //<ActivityList />
+
+
+
+
+
+
+
+
+          //<thead>
+          //                  <tr>
+
+          //                      <th>Aktivitet</th>
+          //                      <th>Timmar</th>
+          //                      <th>Datum</th>
+
+
+          //                  </tr>
+          //              </thead>
+          //              <tbody>
+          //                  <tr key={this.state.activityLogEntries.form}>
+          //                      <td> <div>{this.state.activityLogEntries.map((form, id) => {
+          //                          return <p>{form.name}</p>
+
+          //                      })}
+          //                      </div></td>
+          //                      <td> <div>{this.state.activityLogEntries.map((form, id) => {
+          //                          return <p>{form.hours}h</p>
+
+          //                      })}
+          //                      </div></td>
+          //                      <td>
+
+
+
+
+          //                      </td>
+          //                      //{numberFormat}
+          //                      //   {dateCount}
+
+
+
+
+
+
+
+
+          //                  </tr>
+
+          //              </tbody>
+          //          </Table>
 
                 //    <center>
                 //        <Row>

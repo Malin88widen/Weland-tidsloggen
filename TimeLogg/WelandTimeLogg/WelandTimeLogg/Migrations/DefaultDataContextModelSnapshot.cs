@@ -50,10 +50,16 @@ namespace WelandTimeLogg.Migrations
                     b.Property<DateTime>("createdDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("hours")
                         .HasColumnType("decimal(8,2)");
 
                     b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("project")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("userId")
