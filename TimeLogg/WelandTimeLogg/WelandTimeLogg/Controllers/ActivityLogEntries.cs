@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.CodeAnalysis;
+using Microsoft.OData.Edm;
 using WelandTimeLogg.DataAccess;
 using WelandTimeLogg.Models;
 
@@ -25,6 +26,22 @@ namespace WelandTimeLogg.Controllers
         {
             var activityLogEntries = dataContext.ActivityLogEntries
            .OrderByDescending(f => f.createdDate);
+
+            if (activityLogEntries == null)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+            return Ok(activityLogEntries);
+
+        }
+
+
+        [HttpGet("api/activityLogEntriesFrontPage")] ////FrontPage här!
+        public IActionResult GetActivityLogEntriesResultsFrontPage()
+        {
+            var activityLogEntries = dataContext.ActivityLogEntries
+           .OrderByDescending(f => f.createdDate).Take(2); //Take(2) visar 2 st, Take(Today)??
 
             if (activityLogEntries == null)
             {
@@ -67,7 +84,9 @@ namespace WelandTimeLogg.Controllers
                 {
                     createdDate = DateTime.Now,
                     hours = decimal.Parse(input.hour.Replace(".","," )),
-                    name = input.name
+                    name = input.name,
+                    description = input.description,
+                    project = input.project
                 };
             }
             catch (Exception)

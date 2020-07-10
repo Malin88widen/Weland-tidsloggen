@@ -14,6 +14,9 @@ namespace WelandTimeLogg.Models
 
         public string name { get; set; }
 
+        public string description { get; set;}
+
+        public string project { get; set; }
     
         public DateTime createdDate { get; set; }
 

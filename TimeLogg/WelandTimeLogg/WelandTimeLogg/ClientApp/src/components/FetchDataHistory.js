@@ -10,6 +10,7 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import Button from 'react-bootstrap/Button';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel'; 
+import ReactTable  from 'react-table'; 
 import ActivityLogEntries from './FetchDataHistory'
 
 
@@ -19,8 +20,11 @@ import ActivityLogEntries from './FetchDataHistory'
             super(props)
 
             this.state = {
+                id: '',
                 hour: '',
                 name: '',
+                description: '',
+                project: '',
                 activityLogEntries: [],
                 createdDate: [],
                 loading: true,
@@ -39,47 +43,82 @@ import ActivityLogEntries from './FetchDataHistory'
             this.setState({ activityLogEntries: data, loading: false });
         }
 
+
+
+
         render() {
 
-            var createdDateOutput = this.state.activityLogEntries.map((form, id) =>
-                <p>{(new Date(form.createdDate).toLocaleDateString())}</p>
-            );
 
-            var createdHoursOutput = this.state.activityLogEntries.map((form, id) => {
-                return <p>{form.hours} h</p>
-            });
+            //const columns = [
+            //    {
+            //        Header: "id",
+            //        accessor: "id"
+            //    },
+            //    {
+            //        Header: "name",
+            //        accessor: "name"
+            //    },
+            //    {
+            //        Header: "description",
+            //        accessor: "id"
+            //    },
+            //]
 
-            var createdActivityNameOutput = this.state.activityLogEntries.map((form, id) => {
-                return <p>{form.name}</p>
-            });
-         
+           
+
+            //var cts = this.state.activityLogEntries.map((form, id) =>
+            //    <p key={id}>{(new Date(form.createdDate).toLocaleDateString())}</p>
+            //);
+
+            //var createdDateOutput = this.state.activityLogEntries.map((form, id) =>
+            //    <p key={id}>{(new Date(form.createdDate).toLocaleDateString())}</p>
+            //);
+
+            //var createdHoursOutput = this.state.activityLogEntries.map((form, id) => {
+            //    return <p key={id}>{form.hours} h</p>
+            //});
+
+            //var createdActivityNameOutput = this.state.activityLogEntries.map((form, id) => {
+            //    return <p key={id}>{form.name}</p>
+            //});
+            //var createdDescriptionOutput = this.state.activityLogEntries.map((form, id) => {
+            //    return <p key={id}>{form.description}</p>
+            //});
+            //var createdProjectOutput = this.state.activityLogEntries.map((form, id) => {
+            //    return <p key={id}>{form.project}</p>
+            //});
+
+
             return (
+
+
                 <Container>
+                    <br />
                     <h2>Historik</h2>
 
-                    <Table id='emp' class='table' striped bordered hover>
+                    <Table id='emp' class='table' striped bordered >
                         <thead>
                             <tr>
-
-                                <th>Aktivitet</th>
+                                <th>Arbetstyp</th>
                                 <th>Timmar</th>
+                                <th>Beskrivning</th>
                                 <th>Datum</th>
+                                <th>Projekt</th>
 
                             </tr>
                         </thead>
                         <tbody>
-                            <tr >
-                                <td key={createdActivityNameOutput}>
-                                    <span>{createdActivityNameOutput}</span>
-                                </td>
-                                <td>
-                                    <span>{createdHoursOutput}</span>
-                                </td>
-                                <td>
-                                    <span>{createdDateOutput}</span>
-                                </td>
-                            </tr>
-
+                            {this.state.activityLogEntries.map(function (id) {
+                                return (
+                                    <tr key={id}>
+                                        <td>{id.name}</td>
+                                        <td>{id.hours} h</td>
+                                        <td> {id.description}</td>
+                                        <td>{(new Date(id.createdDate).toLocaleDateString())}</td>
+                                        <td>{id.project}</td>
+                                    </tr>
+                                )
+                            })}
                         </tbody>
                     </Table>
                     <div>
@@ -88,9 +127,8 @@ import ActivityLogEntries from './FetchDataHistory'
                             table="emp"
                             filename="ReportExcel"
                             sheet="Sheet"
-                            buttonText="Export excel" />
+                            buttonText="Exportera till Excel" />
                     </div>
-   
                 </Container >
 
             )
