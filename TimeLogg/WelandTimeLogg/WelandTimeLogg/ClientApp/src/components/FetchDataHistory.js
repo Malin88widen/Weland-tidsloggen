@@ -14,6 +14,8 @@ import ReactTable  from 'react-table';
 import ActivityLogEntries from './FetchDataHistory'
 
 
+
+
     class FetchDataHistory extends Component {
 
         constructor(props) {
@@ -47,6 +49,8 @@ import ActivityLogEntries from './FetchDataHistory'
 
 
         render() {
+
+          
 
 
             //const columns = [
@@ -129,6 +133,11 @@ import ActivityLogEntries from './FetchDataHistory'
                             sheet="Sheet"
                             buttonText="Exportera till Excel" />
                     </div>
+
+
+
+             
+
                 </Container >
 
             )

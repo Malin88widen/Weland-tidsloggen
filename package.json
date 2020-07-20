@@ -18,6 +18,8 @@
     "react-html-table-to-excel": "^2.0.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "react-select": "^3.1.0",
+    "react-selectlist": "^3.0.6",
     "react-table": "^7.2.2",
     "react-table-6": "^6.11.0",
     "rimraf": "^3.0.2"

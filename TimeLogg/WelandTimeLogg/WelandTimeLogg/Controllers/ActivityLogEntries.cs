@@ -21,6 +21,11 @@ namespace WelandTimeLogg.Controllers
             dataContext = context;
         }
 
+        public IActionResult List(int id = 0)
+        {
+            return View();
+        }
+
         [HttpGet("api/activityLogEntries")]
         public IActionResult GetActivityLogEntriesResults()
         {
@@ -41,7 +46,7 @@ namespace WelandTimeLogg.Controllers
         public IActionResult GetActivityLogEntriesResultsFrontPage()
         {
             var activityLogEntries = dataContext.ActivityLogEntries
-           .OrderByDescending(f => f.createdDate).Take(2); //Take(2) visar 2 st, Take(Today)??
+           .OrderByDescending(f => f.createdDate).Take(3); //Take(2) visar 2 st, Take(Today)??
 
             if (activityLogEntries == null)
             {

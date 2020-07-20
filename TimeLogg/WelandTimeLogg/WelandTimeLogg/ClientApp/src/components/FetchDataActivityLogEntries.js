@@ -9,7 +9,8 @@ import Button from "react-bootstrap/Button";
 import ActivityLogEntries from './FetchDataHistory'
 import NameList from "./Form";
 import ActivityList from "./Form";
-
+import ReactSelectList from "react-selectlist";
+import Select from 'react-select';
 
 
 
@@ -171,6 +172,12 @@ class FetchDataActivityLogEntries extends Component {
                             })}
                         </tbody>
                     </Table>
+
+            
+
+
+
+
                 </Container >
             </div>
         )
@@ -182,6 +189,33 @@ class FetchDataActivityLogEntries extends Component {
 
 
 export default FetchDataActivityLogEntries;
+
+//<ReactSelectList
+//    className={"rc-selectlist"}
+//    data={data}
+//    disabled={[true, true]}
+//    value={selected}
+//    multiple={multiple}
+//    orientation={orientation}
+//    onChange={this._onSelectChange}
+///>
+
+//<Select
+//    name="form-field-name"
+//    value="one"
+//    options={options}
+//    onChange={logChange}
+///>
+
+
+
+//<select value={selected[0]} onChange={this._onChangeDefault}>
+//    <option value={1}> Nuggets </option>
+//    <option value={2}> Jazz </option>
+//    <option value={3}> Warriors </option>
+//    <option value={4}> Lakers </option>
+//</select>
+
 
 
                     //<NameList />
