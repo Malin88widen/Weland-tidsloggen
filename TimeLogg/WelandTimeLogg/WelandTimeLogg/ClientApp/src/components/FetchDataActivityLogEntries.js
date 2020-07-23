@@ -11,6 +11,12 @@ import NameList from "./Form";
 import ActivityList from "./Form";
 import ReactSelectList from "react-selectlist";
 import Select from 'react-select';
+import SelectList from 'react-widgets/lib/SelectList';
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import FetchDataForms from './FetchDataForms';
+import CreatableSelect from 'react-select/creatable';
+
 
 
 
@@ -19,23 +25,33 @@ class FetchDataActivityLogEntries extends Component {
     constructor(props) {
         super(props)
 
+
+
         this.state = {
             hour: '',
             name: '',
             project: '',
             description: '',
             activityLogEntries: [],
-            createdDate: []
+            createdDate: [],
+            selectedOption: null,
 
-
+            isClearable: true,
+            isDisabled: false,
+            isLoading: false,
+            isRtl: false,
+            isSearchable: true,
         }
 
+        const { selectedOption } = this.state;
+        //this.deleteHandler = this.deleteHandler.bind(this);
 
     }
 
+
+
     async componentDidMount() {
         const url = "https://localhost:44325/api/activityLogEntriesFrontPage";
-
         const response = await fetch(url);
         const data = await response.json();
         console.log(data);
@@ -61,6 +77,19 @@ class FetchDataActivityLogEntries extends Component {
             })
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //DELETE KNAPP ICKE FUNKTIONELL
+
+
+
+    //Icke funktionell deleteknapp-funktion
+    //deleteHandler(id) {
+    //    console.log('raderat', id);
+    //};
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Exempel på att hämta data:
+
 
 
     //handleSubmitSaveToHistory = (e) => {
@@ -77,37 +106,90 @@ class FetchDataActivityLogEntries extends Component {
     //        })
 
     //}
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    handleChange = selectedOption => {
+        this.setState({ selectedOption });
+        console.log(`Option selected:`, selectedOption);
+
+    }
+
+
+    handleChanges = (e) => {
+        this.setState({
+            value: e.target.value
+        });
+    }
 
     render() {
 
 
+        //Select som fungerar
+        let activitiesSelectList = this.state.activityLogEntries.map((item, i) => {
+            
+            return (
+                <option key={i} selectListName={item.id}>{item.name}</option>
+            )
+        }, this);
 
 
-        //var dateCount = this.state.activityLogEntries.map((form, id) =>
-        //    <p>{form.createdDate}</p>
-        //);
+        //Select test
+        var createdProjectOutput = this.state.activityLogEntries.map((form, id) => {
+            return <p key={id}>{form.selectListName}</p>
+        });
+
+        //Select Test
+        var options = this.state.activityLogEntries.map((item, i) => {
+            return (
+                <option key={i} selectListName={item.id}>{item.name}</option>
+            )
+        }, this);
+
+        //Select test
+        var RightOneMaby = this.state.activityLogEntries.map(function (id) {
+            return <p>{id.selectListName}</p>
+        })
+
+        //Funktioner som gör att en select ska rensas osv. vet inte om det fungerar
+        const {
+            isClearable,
+            isSearchable,
+            isDisabled,
+            isLoading,
+            isRtl,
+        } = this.state;
 
 
-        //var createdDateOutput = this.state.activityLogEntries.map((form, id) =>
-        //    <p>{(new Date(form.createdDate).toLocaleDateString())}</p>
-        //);
+        //select med fasta/låsta/icke dynamiska värden
+        const optionsNotDynamic = [
+            { value: 'chocolate', label: 'Chocolate' },
+            { value: 'strawberry', label: 'Strawberry' },
+            { value: 'vanilla', label: 'Vanilla' }
 
-        //var createdHoursOutput = this.state.activityLogEntries.map((form, id) => {
-        //    return <p key={id}>{form.hours} h</p>
+        ]
+
+        //select med försök till dynamisk data som värden
+        const optionsMabyDynamic = [
+            {
+                activitiesSelectList
+            }
+        ]
+
+        //Hämtar data från "optionsMabyDynamic"
+        const MyComponent = () => (
+            <Select options={optionsMabyDynamic} />
+        )
+
+        //var inputs = this.state..map((location, i) => {
+        //    let strLoc = JSON.stringify(location); // stringify it
+        //    return (
+        //        <div key={i}>
+        //            <input type="radio" id={i} name="location" value={strLoc} />
+        //            <label htmlFor={'choice' + { i }}>{location.name}</label>
+        //        </div>
+        //    );
         //});
-
-        //var createdActivityNameOutput = this.state.activityLogEntries.map((form, id) => {
-        //    return <p key={id}>{form.name}</p>
-        //});
-        //var createdDescriptionOutput = this.state.activityLogEntries.map((form, id) => {
-        //    return <p key={id}>{form.description}</p>
-        //});
-        //var createdProjectOutput = this.state.activityLogEntries.map((form, id) => {
-        //    return <p key={id}>{form.project}</p>
-        //});
-
-
-
 
         return (
             <div id="HomePageCSS">
@@ -121,6 +203,27 @@ class FetchDataActivityLogEntries extends Component {
                                         <Col>
                                             <Form.Group controlId="formGroupEmail">
                                                 <Form.Label>Arbete:</Form.Label>
+                                                <div>
+                                                      
+                                                  <select type="text"
+                                                        id="selectListName"
+                                                        className="basic-single"
+                                                        classNamePrefix="select"
+                                                        isDisabled={isDisabled}
+                                                        isLoading={isLoading}
+                                                        isClearable={isClearable}
+                                                        isRtl={isRtl}
+                                                        isSearchable={isSearchable}
+                                                        name="selectListname"
+                                                        onChange={this.handleNameChange}>
+
+                                                        {activitiesSelectList}
+                                                    </select>
+                                                </div>
+
+                                               
+
+                                                eller skriv in nytt:
                                                 <Form.Control type="text" id="name" name="name" onChange={this.handleNameChange} />
                                             </Form.Group>
                                         </Col>
@@ -145,6 +248,7 @@ class FetchDataActivityLogEntries extends Component {
                         </form>
                     </Row>
                 </Container>
+
                 <Container>
                     <h2>Historik</h2>
                     <Table striped bordered>
@@ -153,32 +257,35 @@ class FetchDataActivityLogEntries extends Component {
                                 <th>Arbete</th>
                                 <th>Timmar</th>
                                 <th>Beskrivning</th>
-                                <th>Datum</th>
                                 <th>Projekt</th>
+                                <th>Datum</th>
 
                             </tr>
                         </thead>
+
                         <tbody>
+
+
                             {this.state.activityLogEntries.map(function (id) {
                                 return (
                                     <tr key={id}>
-                                        <td>{id.name}</td>
+                                        <td>{id.name || id.selectListName}</td>
                                         <td>{id.hours} h</td>
                                         <td> {id.description}</td>
-                                        <td>{(new Date(id.createdDate).toLocaleDateString())}</td>
                                         <td>{id.project}</td>
+                                        <td>{(new Date(id.createdDate).toLocaleDateString())}</td>
+
                                     </tr>
+                                    //<td>
+                                    //    <Button onClick={function () { this.deleteHandler(id) }} className="btn btn-danger btn-sm">Ta bort</Button>
+                                    //</td>
                                 )
                             })}
                         </tbody>
                     </Table>
 
-            
-
-
-
-
                 </Container >
+
             </div>
         )
     }
@@ -186,9 +293,71 @@ class FetchDataActivityLogEntries extends Component {
 
 
 
-
-
 export default FetchDataActivityLogEntries;
+
+                                               // Selectlist som fungerar fast man får ut [object Object] alltså ett helt objekt istället för en del av objectet
+                                                //<SelectList
+                                                //    type="text"
+                                                //    id="selectListName"
+                                                //    className="basic-single"
+                                                //    classNamePrefix="select"
+                                                //    defaultValue={activitiesSelectList}
+                                                //    onChange={this.handleNameChange}
+                                                //    isDisabled={isDisabled}
+                                                //    isLoading={isLoading}
+                                                //    isClearable={isClearable}
+                                                //    isRtl={isRtl}
+                                                //    isSearchable={isSearchable}
+                                                //    name="color"
+                                                //    options={activitiesSelectList}
+                                                //    value={this.state.value}
+                                                //    data={activitiesSelectList}
+                                                ///>
+
+
+
+                                                //Test select som inte fungerar
+                                                //<div>
+                                                //    <MyComponent />
+                                                //</div>
+
+
+
+
+//<SelectList //ta bort List för att få en dropdown
+//    type="text"
+//    id="selectListTwo"
+//    name="selectListTwo"
+//    closeMenuOnSelect={true}
+//    components={animatedComponents}
+//    options={options}
+//    dataItemKey={RightOneMaby}
+//    value={this.state.value}
+//    onChange={this.handleChange}
+//    groupBy={activityLogEntries => activityLogEntries.activitiesSelectList}
+//    data={options}
+//name="citySelect"
+///>
+
+
+
+//       this.deleteHandler = this.deleteHandler.bind(this);
+
+//deleteHandler(id) {
+    //e.preventDefault()
+    //const data = this.state;
+    //console.log(data)
+    //axios.delete('https://localhost:44325/api/activityLogEntries/delete', this.state)
+    //    .then(response => {
+    //        console.log(response)
+    //        window.location.reload();
+    //    })
+//    console.log('readerat', id);
+//};
+
+
+                                            //<Button onClick={function () { this.deleteHandler(id)}} className="btn btn-danger btn-sm">Delete</Button>
+
 
 //<ReactSelectList
 //    className={"rc-selectlist"}
@@ -228,97 +397,7 @@ export default FetchDataActivityLogEntries;
 
 
 
-          //<thead>
-          //                  <tr>
-
-          //                      <th>Aktivitet</th>
-          //                      <th>Timmar</th>
-          //                      <th>Datum</th>
-
-
-          //                  </tr>
-          //              </thead>
-          //              <tbody>
-          //                  <tr key={this.state.activityLogEntries.form}>
-          //                      <td> <div>{this.state.activityLogEntries.map((form, id) => {
-          //                          return <p>{form.name}</p>
-
-          //                      })}
-          //                      </div></td>
-          //                      <td> <div>{this.state.activityLogEntries.map((form, id) => {
-          //                          return <p>{form.hours}h</p>
-
-          //                      })}
-          //                      </div></td>
-          //                      <td>
 
 
 
 
-          //                      </td>
-          //                      //{numberFormat}
-          //                      //   {dateCount}
-
-
-
-
-
-
-
-
-          //                  </tr>
-
-          //              </tbody>
-          //          </Table>
-
-                //    <center>
-                //        <Row>
-                //        <Col>Historik</Col>
-                //        </Row>
-                //    </center>
-
-                //<Row>
-
-                //    <div>
-                //        <Col>
-                //            {this.state.activityLogEntries.map((form, id) => {
-                //                return <p>{form.id}</p>
-
-                //            })}
-                //        </Col>
-                //    </div>
-
-
-                //    <div>
-                //        <Col>
-                //            {this.state.activityLogEntries.map((form, id) => {
-                //                return <p>{form.name}</p>
-
-                //            })}
-                //        </Col>
-                //    </div>
-
-                //    <div>
-                //        <Col>
-                //            {this.state.activityLogEntries.map((form, id) => {
-                //                return <p>{form.hours}</p>
-
-                //            })}
-                //        </Col>
-                //    </div>
-
-                //</Row>
-
-
-
-//<tbody>
-//    <tr>
-//        <ul>
-//            {this.state.activityLogEntries.map((form, id) => {
-//                return <li key={id}>{form.name}</li>;
-//            })}
-
-
-//        </ul>
-//    </tr>
-//</tbody>

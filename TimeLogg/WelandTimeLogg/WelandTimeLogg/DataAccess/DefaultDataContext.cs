@@ -17,5 +17,6 @@ namespace WelandTimeLogg.DataAccess
 
         public DbSet<Forms> Forms { get; set; }
 
+
     }
 }

@@ -3,6 +3,9 @@ import Form from './Form'
 import axios from 'axios';
 import Table from 'react-bootstrap/table';
 import Button from "react-bootstrap/Button";
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import Container from "react-bootstrap/Container";
 
 class FetchDataForms extends React.Component {
     state = {
@@ -18,13 +21,9 @@ class FetchDataForms extends React.Component {
         const data = await response.json();
         console.log(data);
         this.setState({ forms: data, loading: false });
-
-
-
-
     }
 
-
+    //FormikTest
 
     render() {
         return (
@@ -32,34 +31,41 @@ class FetchDataForms extends React.Component {
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-4"></div>
-                        <form>
-                            <div class="form-group">
-                                <label for="forms">Spara Aktivitet:</label>
-                                <select class="form-control">
-                                    <option value="meeting">Möte</option>
-                                    <option value="dokumentation">Dokumentation</option>
-                                    <option selected value="default">
-                                        hey
-                                    </option>
-                                    <option value="mango">Felsökning</option>
-                                </select>
-                                <br />
-                                <br />
-                                <label for="hours">Skriv in dina arbetande timmar:</label>
-                                <input class="form-control" type={"numbers"}></input>
-                                <br />
-                                <button type="button" class="btn btn-success">Spara</button>
-                            </div>
+                        <Container>
+                            <section className="form-style">
+                                <h2>Example Clear Inputs with Formik</h2>
+                                <Formik
+                                    initialValues={{ Firstname: '', FirstNumber: '' }}
+                                    validationSchema={yup.object({ Firstname: yup.string(), FirstNumber: yup.number() })}
+                                    onSubmit={(values) => {
+                                        console.log(values);
+                                    }}>
+                                    {
+                                        formik => (
+                                            <form onSubmit={formik.handleSubmit}>
+                                                <label htmlFor="FirstName">Name</label>
+                                                <input
+                                                    type="text"
+                                                    id="Firstname"
+                                                    onChange={formik.handleChange}
+                                                    value={formik.values.Firstname}
+                                                ></input>
+                                                <label htmlFor="FirstNumber">Number</label>
+                                                <input
+                                                    type="text"
+                                                    id="FirstNumber"
+                                                    onChange={formik.handleChange}
+                                                    value={formik.values.Firstname}
+                                                ></input>
+                                                <input type="submit" value="Send"></input>
+                                            </form>
+                                        )
+                                    }
 
+                                </Formik>
 
-                            <ul>
-                                {this.state.forms.map((form, id) => {
-                                    return <li key={id}>{form.name}</li>;
-                                })}
-
-                                
-                            </ul>
-                        </form>
+                            </section>
+                        </Container>
 
                     </div>
                 </div>
@@ -71,10 +77,4 @@ class FetchDataForms extends React.Component {
 
 export default FetchDataForms;
 
-                        //<ul>
-                        //    <li>
-                        //        {this.state.forms.map((Form) => Form
-                        //     { this.state.forms.name }
-                        //       )  </li>
-                        //    )};
-                        //</ul>
+                

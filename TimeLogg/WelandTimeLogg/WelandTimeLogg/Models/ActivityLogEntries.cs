@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,6 +16,12 @@ namespace WelandTimeLogg.Models
 
         public string name { get; set; }
 
+        public string selectListName { get; set; }
+
+        //public string selectListTwo { get; set; }
+
+        
+
         public string description { get; set;}
 
         public string project { get; set; }
@@ -22,6 +29,8 @@ namespace WelandTimeLogg.Models
         public DateTime createdDate { get; set; }
 
         public int activityLastedHours { get; set; }
+
+        //public List<SelectListItem> ActivitySelectEntries { get; set; }
 
 
         [Column(TypeName = "decimal(8,2)")]

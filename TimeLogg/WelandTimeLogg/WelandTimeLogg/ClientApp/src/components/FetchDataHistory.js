@@ -9,143 +9,164 @@ import ReactExport from "react-export-excel";
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import Button from 'react-bootstrap/Button';
-import ReactHTMLTableToExcel from 'react-html-table-to-excel'; 
-import ReactTable  from 'react-table'; 
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import ReactTable from 'react-table';
 import ActivityLogEntries from './FetchDataHistory'
+import SelectList from 'react-widgets/lib/SelectList'
 
 
 
 
-    class FetchDataHistory extends Component {
+class FetchDataHistory extends Component {
 
-        constructor(props) {
-            super(props)
+    constructor(props) {
+        super(props)
 
-            this.state = {
-                id: '',
-                hour: '',
-                name: '',
-                description: '',
-                project: '',
-                activityLogEntries: [],
-                createdDate: [],
-                loading: true,
-                person: null
-
-            }
+        this.state = {
+            id: '',
+            hour: '',
+            name: '',
+            description: '',
+            project: '',
+            activityLogEntries: [],
+            createdDate: [],
+            loading: true,
+            person: null
 
         }
 
-        async componentDidMount() {
-            const url = "https://localhost:44325/api/activityLogEntries";
+    }
 
-            const response = await fetch(url);
-            const data = await response.json();
-            console.log(data);
-            this.setState({ activityLogEntries: data, loading: false });
-        }
+    async componentDidMount() {
+        const url = "https://localhost:44325/api/activityLogEntries";
 
-
-
-
-        render() {
-
-          
-
-
-            //const columns = [
-            //    {
-            //        Header: "id",
-            //        accessor: "id"
-            //    },
-            //    {
-            //        Header: "name",
-            //        accessor: "name"
-            //    },
-            //    {
-            //        Header: "description",
-            //        accessor: "id"
-            //    },
-            //]
-
-           
-
-            //var cts = this.state.activityLogEntries.map((form, id) =>
-            //    <p key={id}>{(new Date(form.createdDate).toLocaleDateString())}</p>
-            //);
-
-            //var createdDateOutput = this.state.activityLogEntries.map((form, id) =>
-            //    <p key={id}>{(new Date(form.createdDate).toLocaleDateString())}</p>
-            //);
-
-            //var createdHoursOutput = this.state.activityLogEntries.map((form, id) => {
-            //    return <p key={id}>{form.hours} h</p>
-            //});
-
-            //var createdActivityNameOutput = this.state.activityLogEntries.map((form, id) => {
-            //    return <p key={id}>{form.name}</p>
-            //});
-            //var createdDescriptionOutput = this.state.activityLogEntries.map((form, id) => {
-            //    return <p key={id}>{form.description}</p>
-            //});
-            //var createdProjectOutput = this.state.activityLogEntries.map((form, id) => {
-            //    return <p key={id}>{form.project}</p>
-            //});
-
-
-            return (
-
-
-                <Container>
-                    <br />
-                    <h2>Historik</h2>
-
-                    <Table id='emp' class='table' striped bordered >
-                        <thead>
-                            <tr>
-                                <th>Arbetstyp</th>
-                                <th>Timmar</th>
-                                <th>Beskrivning</th>
-                                <th>Datum</th>
-                                <th>Projekt</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.activityLogEntries.map(function (id) {
-                                return (
-                                    <tr key={id}>
-                                        <td>{id.name}</td>
-                                        <td>{id.hours} h</td>
-                                        <td> {id.description}</td>
-                                        <td>{(new Date(id.createdDate).toLocaleDateString())}</td>
-                                        <td>{id.project}</td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </Table>
-                    <div>
-                        <ReactHTMLTableToExcel
-                            className="btn btn-info"
-                            table="emp"
-                            filename="ReportExcel"
-                            sheet="Sheet"
-                            buttonText="Exportera till Excel" />
-                    </div>
-
-
-
-             
-
-                </Container >
-
-            )
-        }
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data);
+        this.setState({ activityLogEntries: data, loading: false });
     }
 
 
+
+
+    render() {
+
+
+
+        return (
+
+
+            <Container>
+                <br />
+                <h2>Historik</h2>
+
+                <Table id='emp' class='table' striped bordered >
+                    <thead>
+                        <tr>
+                            <th>Arbetstyp</th>
+                            <th>Timmar</th>
+                            <th>Beskrivning</th>
+                            <th>Datum</th>
+                            <th>Projekt</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.activityLogEntries.map(function (id) {
+                            return (
+                                <tr key={id}>
+                                    <td>{id.name || id.selectListName}</td>
+                                    <td>{id.hours} h</td>
+                                    <td> {id.description}</td>
+                                    <td>{(new Date(id.createdDate).toLocaleDateString())}</td>
+                                    <td>{id.project}</td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </Table>
+                <div>
+                    <ReactHTMLTableToExcel
+                        className="btn btn-info"
+                        table="emp"
+                        filename="ReportExcel"
+                        sheet="Sheet"
+                        buttonText="Exportera till Excel" />
+                </div>
+
+
+
+
+
+            </Container >
+
+        )
+    }
+}
+
+
 export default FetchDataHistory;
+
+
+
+//SelectList:
+                //<div>
+
+
+                //    {this.state.activityLogEntries.map(function (id) {
+                //        return (
+                //            <div>
+                //                <SelectList key={id}
+                //                    disabled
+                //                    data={id.name}
+                //                //defaultValue={["orange", "blue"]}
+                //                />
+                //                <SelectList key={id}
+                //                    data={colors}
+                //                    defaultValue={["orange", "blue"]}
+                //                    disabled={["red", "purple"]}
+                //                />
+                //            </div>
+
+                //        )
+                //    })}
+
+                //</div>
+
+
+
+
+        //var cts = this.state.activityLogEntries.map((form, id) =>
+        //    <p key={id}>{(new Date(form.createdDate).toLocaleDateString())}</p>
+        //);
+
+        //var createdDateOutput = this.state.activityLogEntries.map((form, id) =>
+        //    <p key={id}>{(new Date(form.createdDate).toLocaleDateString())}</p>
+        //);
+
+        //var createdHoursOutput = this.state.activityLogEntries.map((form, id) => {
+        //    return <p key={id}>{form.hours} h</p>
+        //});
+
+        //var createdActivityNameOutput = this.state.activityLogEntries.map((form, id) => {
+        //    return <p key={id}>{form.name}</p>
+        //});
+        //var createdDescriptionOutput = this.state.activityLogEntries.map((form, id) => {
+        //    return <p key={id}>{form.description}</p>
+        //});
+        //var createdProjectOutput = this.state.activityLogEntries.map((form, id) => {
+        //    return <p key={id}>{form.project}</p>
+        //});
+
+
+
+
+
+
+
+
+
+
 
 
                     //<ExcelFile>
@@ -174,7 +195,7 @@ export default FetchDataHistory;
 
 //                })}
 //                </div></td>
-           
+
 
 //            </tr>
 //        )
@@ -219,7 +240,7 @@ export default FetchDataHistory;
 //}
 
 
-   
+
 
 
 
