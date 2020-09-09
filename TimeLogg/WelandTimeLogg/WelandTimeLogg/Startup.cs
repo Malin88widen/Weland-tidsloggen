@@ -31,8 +31,8 @@ namespace WelandTimeLogg
                 configuration.RootPath = "ClientApp/build";
             });
 
-           
-            services.AddDbContext<DefaultDataContext>(options => 
+
+            services.AddDbContext<DefaultDataContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("WelandTimeConString")));
 
 

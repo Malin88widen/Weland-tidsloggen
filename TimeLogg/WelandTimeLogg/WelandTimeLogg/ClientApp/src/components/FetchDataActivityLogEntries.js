@@ -16,6 +16,7 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import FetchDataForms from './FetchDataForms';
 import CreatableSelect from 'react-select/creatable';
+import LogIn from "./auth/Login"
 
 
 
@@ -43,11 +44,17 @@ class FetchDataActivityLogEntries extends Component {
             isSearchable: true,
         }
 
+        this.handleSuccessfulAuth = this.handleSuccessfulAuth.bind(this);
+
         const { selectedOption } = this.state;
         //this.deleteHandler = this.deleteHandler.bind(this);
 
     }
 
+    handleSuccessfulAuth(data) {
+        this.props.handleLogin(data);
+        this.props.history.push("/dashboard");
+    }
 
 
     async componentDidMount() {
@@ -194,6 +201,8 @@ class FetchDataActivityLogEntries extends Component {
         return (
             <div id="HomePageCSS">
                 <Container>
+                    <h1>Inloggad</h1>
+                    <h2>Fyll i formul&#228;ret f&#246;r att spara tids-aktivitet</h2>
                     <Row>
                         <div class="col-sm-4"></div>
                         <form onSubmit={this.handleSubmit}>
