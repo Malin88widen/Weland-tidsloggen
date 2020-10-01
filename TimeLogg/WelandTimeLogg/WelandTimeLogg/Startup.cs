@@ -8,8 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WelandTimeLogg.DataAccess;
 
+
 namespace WelandTimeLogg
 {
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
