@@ -3,6 +3,10 @@
     "mssql1": {
       "type": "mssql",
       "connectionId": "WelandTimeConString"
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "Server=.\\\\SQLExpress;Database=WelandTime;Trusted_Connection=True;MultipleActiveResultSets=true"
     }
   }
 }

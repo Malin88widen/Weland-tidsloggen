@@ -14,6 +14,7 @@ namespace WelandTimeLogg.Models
         [Key]
         public int id { get; set; }
 
+        //[Required(ErrorMessage = "Title is required")]
         public string name { get; set; }
 
         public string selectListName { get; set; }
@@ -32,7 +33,7 @@ namespace WelandTimeLogg.Models
 
         //public List<SelectListItem> ActivitySelectEntries { get; set; }
 
-
+        //[Required(ErrorMessage = "Ange antal timmar")]
         [Column(TypeName = "decimal(8,2)")]
         public decimal hours { get; set; }
 

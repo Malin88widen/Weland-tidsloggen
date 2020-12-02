@@ -3,7 +3,7 @@
     "mssql2": {
       "type": "mssql.onprem",
       "connectionId": "Server=.\\\\SQLExpress;Database=WelandTime;Trusted_Connection=True;MultipleActiveResultSets=true",
-      "secretStore": null
+      "secretStore": "AzureAppSettings"
     }
   }
 }

@@ -66,8 +66,9 @@ class FetchDataHistory extends Component {
                             <th>Arbetstyp</th>
                             <th>Timmar</th>
                             <th>Beskrivning</th>
-                            <th>Datum</th>
                             <th>Projekt</th>
+                            <th>Datum</th>
+                            
 
                         </tr>
                     </thead>
@@ -78,8 +79,9 @@ class FetchDataHistory extends Component {
                                     <td>{id.name || id.selectListName}</td>
                                     <td>{id.hours} h</td>
                                     <td> {id.description}</td>
-                                    <td>{(new Date(id.createdDate).toLocaleDateString())}</td>
                                     <td>{id.project}</td>
+                                    <td>{(new Date(id.createdDate).toLocaleDateString())}</td>
+                                   
                                 </tr>
                             )
                         })}

@@ -9,15 +9,15 @@ namespace WelandTimeLogg.Models
         [Required(ErrorMessage = "Ange antal timmar")]
         public string hour { get; set; }
 
+        [Required(ErrorMessage = "Du måste ange en titel")]
         public string name { get; set; }
 
         
 
-    public string selectListName { get; set; }
+        public string selectListName { get; set; }
 
         //public string selectListTwo { get; set; }
 
-        [Required(ErrorMessage = "Ange en beskrivning")]
         public string description { get; set; }
 
         public string project { get; set; }

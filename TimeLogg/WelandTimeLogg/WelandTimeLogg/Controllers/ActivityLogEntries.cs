@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -131,18 +132,23 @@ namespace WelandTimeLogg.Controllers
             return Ok(activityLogEntries);
         }
 
-
+        
         [Consumes("application/json")]
         [HttpPost("api/activityLogEntries/post")]
         public ActionResult PostActivityLogEntries([FromBody] ActivityLogSmall input)
         {
-            //if (ModelState.IsValid)
-            //{
+            if (ModelState.IsValid)
+            {
                 ActivityLogEntries activityLogDto;
                 try
                 {
                     activityLogDto = new ActivityLogEntries
                     {
+                       //if string.selectListname = null =>
+                       //selectListname = input.name &
+                       //if string.name = "" =>
+                       //string.name= input.selectListName
+
                    
                        //selectListTwo = input.selectListTwo,
                         selectListName = input.selectListName,
@@ -151,7 +157,11 @@ namespace WelandTimeLogg.Controllers
                         hours = decimal.Parse(input.hour.Replace(".", ",")),
                         description = input.description,
                         project = input.project
+
                     };
+
+                   
+
                 }
                 catch (Exception)
                 {
@@ -164,19 +174,29 @@ namespace WelandTimeLogg.Controllers
                 dataContext.ActivityLogEntries.Add(activityLogDto);
                 dataContext.SaveChanges();
                 return CreatedAtAction("GetActivityLogEntriesResults", activityLogDto);
-            //}
-            //else
-            //{
-            //    return View();
-            //}
-           
-        
+            }
+            else
+            {
+             
+                return View();
+            }
+
+
         }
 
 
-        [HttpDelete("api/activityLogEntries/delete")]
-        public void DeleteActivityLogById(int id)
+        [HttpPost("api/activityLogEntries/delete/{id}")]
+        public IActionResult DeleteCategory(int Id)
         {
+            dataContext.Remove(Id);
+            return RedirectToAction("Index");
+        }
+
+        [HttpDelete("api/activityLogEntries/delete/{id}")]
+        public void DeleteActivityLogById(int id, ActivityLogEntries a)
+        {
+
+
             var dataContextActivity = dataContext.ActivityLogEntries.FirstOrDefault(x => x.id.Equals(id));
 
             dataContext.Remove(dataContextActivity);

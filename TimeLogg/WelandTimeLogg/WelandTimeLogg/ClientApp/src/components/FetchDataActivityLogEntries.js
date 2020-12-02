@@ -22,6 +22,7 @@ import LogIn from "./auth/Login"
 
 
 
+
 class FetchDataActivityLogEntries extends Component {
     constructor(props) {
         super(props)
@@ -31,20 +32,28 @@ class FetchDataActivityLogEntries extends Component {
         this.state = {
             hour: '',
             name: '',
+
             project: '',
             description: '',
             activityLogEntries: [],
             createdDate: [],
             selectedOption: null,
-
+            selectListName: '',
             isClearable: true,
             isDisabled: false,
             isLoading: false,
             isRtl: false,
             isSearchable: true,
-        }
+            data: [],
+            row: '',
+            removeData: true,
+
+        };
 
         this.handleSuccessfulAuth = this.handleSuccessfulAuth.bind(this);
+        this.removeData = this.removeData.bind(this);
+        this.deleteHandler = this.deleteHandler.bind(this);
+
 
         const { selectedOption } = this.state;
         //this.deleteHandler = this.deleteHandler.bind(this);
@@ -84,15 +93,46 @@ class FetchDataActivityLogEntries extends Component {
             })
     }
 
+    handleRemove = (e) => {
+        e.preventDefault()
+        const data = this.state;
+        console.log(data)
+        axios.delete('https://localhost:44325/api/activityLogEntriesFrontPage', this.state)
+            .then(response => {
+                //this.setState(previousState => {
+                //    return {
+                //        movies: previousState.movies.filter(m => m.id !== movie.id)
+                //    };
+                //});
+            })
+    }
+
+    removeActivity = (e, activityLogEntries) => {
+        e.preventDefault();
+
+        if (this.props.removeClick) {
+            this.props.removeClick(activityLogEntries);
+        }
+    };
+
+
+
+    removeData = (e) => {
+        e.preventDefault()
+        const data = this.state;
+        console.log(data)
+        axios.post('https://localhost:44325/api/activityLogEntries/delete/{id}', this.state)
+            .then(response => {
+                console.log(response)
+                window.location.reload();
+            })
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     //DELETE KNAPP ICKE FUNKTIONELL
 
 
 
-    //Icke funktionell deleteknapp-funktion
-    //deleteHandler(id) {
-    //    console.log('raderat', id);
-    //};
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Exempel på att hämta data:
@@ -129,12 +169,85 @@ class FetchDataActivityLogEntries extends Component {
         });
     }
 
+    deleteDep(id) {
+        if (window.confirm('Är du säker?')) {
+            fetch('https://localhost:44325/api/activityLogEntries/{id}' + id, {
+                method: 'DELETE',
+                header: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+        }
+    }
+
+
+
+    //onDeleteClick(id, e) {
+    //    let inventory;
+    //    axios.delete(api() + '/products/' + id).then((deleted) => {
+    //        axios.get(api() + this.state.lastGET).then((response) => {
+    //            inventory = response.data.data
+    //            this.setState({ inventory })
+    //        })
+    //    })
+    //}
+
+    //deleteHandler(e, id) {
+    //    e.preventDefault()
+    //    const data = this.state;
+    //    console.log(data)
+    //    axios.delete('https://localhost:44325/api/activityLogEntries/delete', this.state)
+    //        .then(response => {
+    //            console.log(response)
+    //            window.location.reload();
+    //        })
+    //    console.log('raderat', id, e);
+    //};
+
+    //function(index) {
+    //    var activityLogEntries = [...this.state.activityLogEntries];
+    //    activityLogEntries.splice(index, 1);
+    //    this.setState({ activityLogEntries });
+    //};
+
+    //handleRemove = (i) => {
+    //    this.setState(state => ({
+    //        data: state.data.filter((row, j) => j !== i),
+    //    }));
+    //}
+    //https://www.youtube.com/watch?v=7HVxhqN5fkM
+
+    //deleteMethod(id) {
+    //    if (window.confirm('Are you sure?'))
+    //    {
+
+    //    }
+    //}
+
+    deleteHandler(id) {
+        id.preventDefault()
+        const data = this.state;
+        console.log(data)
+        axios.delete('https://localhost:44325/api/activityLogEntries/delete', this.state)
+            .then(response => {
+                console.log(response)
+                window.location.reload();
+            })
+        console.log('readerat', id);
+    };
+
+
+
+
     render() {
+
+
 
 
         //Select som fungerar
         let activitiesSelectList = this.state.activityLogEntries.map((item, i) => {
-            
+
             return (
                 <option key={i} selectListName={item.id}>{item.name}</option>
             )
@@ -168,14 +281,6 @@ class FetchDataActivityLogEntries extends Component {
         } = this.state;
 
 
-        //select med fasta/låsta/icke dynamiska värden
-        const optionsNotDynamic = [
-            { value: 'chocolate', label: 'Chocolate' },
-            { value: 'strawberry', label: 'Strawberry' },
-            { value: 'vanilla', label: 'Vanilla' }
-
-        ]
-
         //select med försök till dynamisk data som värden
         const optionsMabyDynamic = [
             {
@@ -198,69 +303,83 @@ class FetchDataActivityLogEntries extends Component {
         //    );
         //});
 
+        //function checkForBlanc() {
+        //    if (!this.state.name.equals("")) {
+        //        this.state.name = this.state.selectListName;
+        //    }
+        //    else if (!this.state.selectListName.map.equals("null")) {
+        //        this.state.selectlistname = this.state.name;
+        //    }
+        //}
+
+
+
+
+
+
         return (
             <div id="HomePageCSS">
                 <Container>
-                    <h1>Inloggad</h1>
-                    <h2>Fyll i formul&#228;ret f&#246;r att spara tids-aktivitet</h2>
+                    <h1>TidsLoggen</h1>
+                    <br />
                     <Row>
                         <div class="col-sm-4"></div>
                         <form onSubmit={this.handleSubmit}>
                             <div class="form-group">
+
                                 <Form>
+
                                     <Row>
                                         <Col>
-                                            <Form.Group controlId="formGroupEmail">
-                                                <Form.Label>Arbete:</Form.Label>
-                                                <div>
-                                                      
-                                                  <select type="text"
-                                                        id="selectListName"
-                                                        className="basic-single"
-                                                        classNamePrefix="select"
-                                                        isDisabled={isDisabled}
-                                                        isLoading={isLoading}
-                                                        isClearable={isClearable}
-                                                        isRtl={isRtl}
-                                                        isSearchable={isSearchable}
-                                                        name="selectListname"
-                                                        onChange={this.handleNameChange}>
-
-                                                        {activitiesSelectList}
-                                                    </select>
-                                                </div>
-
-                                               
-
-                                                eller skriv in nytt:
-                                                <Form.Control type="text" id="name" name="name" onChange={this.handleNameChange} />
+                                            <Form.Group controlId="formGroupPassword">
+                                                <Form.Control type="text" Placeholder="Arbetsuppgift *" id="name" name="name" onChange={this.handleNameChange} />
                                             </Form.Group>
                                         </Col>
                                         <Col>
-                                            <Form.Group controlId="formGroupPassword">
-                                                <Form.Label>Dina arbetade timmar:</Form.Label>
-                                                <Form.Control type="number" id="hour" name="hour" onChange={this.handleNameChange} />
+                                            <Form.Group controlId="formGroupEmail">
+                                                <Form.Control type="number" Placeholder="Tid*" id="name" name="hour" onChange={this.handleNameChange} />
                                             </Form.Group>
                                         </Col>
                                     </Row>
                                     <Form.Group controlId="formGroupEmail">
-                                        <Form.Label>Projekt (valfritt):</Form.Label>
-                                        <Form.Control type="text" id="project" name="project" onChange={this.handleNameChange} />
+                                        <Form.Control type="text" Placeholder="Projekt" id="project" name="project" onChange={this.handleNameChange} />
                                     </Form.Group>
                                     <Form.Group controlId="formGroupEmail">
                                         <Form.Label>Beskrivning:</Form.Label>
                                         <Form.Control as="textarea" rows="3" type="text" id="description" name="description" onChange={this.handleNameChange} />
                                     </Form.Group>
+
                                 </Form>
-                                <button type="submit" class="btn btn-info">Spara</button>
+                                <br />
+                                <button type="submit" class="btn btn-info" >Spara</button>
+
                             </div>
+
+
                         </form>
+
                     </Row>
                 </Container>
-
+                <br />
                 <Container>
                     <h2>Historik</h2>
-                    <Table striped bordered>
+                    <div>
+                        {this.state.activityLogEntries.map(function (id) {
+                            return (
+                                    <tr key={id}>
+                                    <td>{id.name}</td>
+                                    <td>{id.hours}</td>
+                                    <td>{id.project}</td>
+                                    <button type="submit" onClick={(e) => this.handleRemove(e, this.activityLogEntries.id)}>
+                                    Delete
+                                </button>
+                                </tr>
+                                 
+                                )
+                            })}
+                        
+                    </div>
+                    <Table id="myTable" striped bordered>
                         <thead>
                             <tr>
                                 <th>Arbete</th>
@@ -268,13 +387,12 @@ class FetchDataActivityLogEntries extends Component {
                                 <th>Beskrivning</th>
                                 <th>Projekt</th>
                                 <th>Datum</th>
-
+                                <th>Ta bort aktivitet</th>
                             </tr>
                         </thead>
 
+
                         <tbody>
-
-
                             {this.state.activityLogEntries.map(function (id) {
                                 return (
                                     <tr key={id}>
@@ -284,13 +402,23 @@ class FetchDataActivityLogEntries extends Component {
                                         <td>{id.project}</td>
                                         <td>{(new Date(id.createdDate).toLocaleDateString())}</td>
 
+                                        <td className='opration'>
+                                            <button onClick={() => this.handleRemove(id)}>Delete</button>
+                                        </td>
+
+                                        <td>
+                                            <div>
+                                                <Button className='mr-2' onClick={() => this.handleRemove(this.state.activityLogEntries.id)} variant="danger">Delete</Button>
+                                                <Button onClick={function () { this.handleRemove(id) }} className="btn btn-danger btn-sm">Delete</Button>
+                                                <Button onClick={i => this.handleRemove(i)}>Delete Row</Button>
+                                            </div>
+                                        </td>
+
                                     </tr>
-                                    //<td>
-                                    //    <Button onClick={function () { this.deleteHandler(id) }} className="btn btn-danger btn-sm">Ta bort</Button>
-                                    //</td>
                                 )
                             })}
                         </tbody>
+
                     </Table>
 
                 </Container >
@@ -303,6 +431,28 @@ class FetchDataActivityLogEntries extends Component {
 
 
 export default FetchDataActivityLogEntries;
+                                                //SELECTLIST!!
+                                                //<div>
+
+                                                //  <select type="text"
+                                                //        id="selectListName"
+                                                //        className="basic-single"
+                                                //        classNamePrefix="select"
+                                                //        isDisabled={isDisabled}
+                                                //        isLoading={isLoading}
+                                                //        isClearable={isClearable}
+                                                //        isRtl={isRtl}
+                                                //        isSearchable={isSearchable}
+                                                //        name="selectListname"
+                                                //        onChange={this.handleNameChange}>
+                                                //        {checkForBlanc}
+                                                //        {activitiesSelectList}
+                                                //    </select>
+                                                //</div>
+
+
+
+
 
                                                // Selectlist som fungerar fast man får ut [object Object] alltså ett helt objekt istället för en del av objectet
                                                 //<SelectList
