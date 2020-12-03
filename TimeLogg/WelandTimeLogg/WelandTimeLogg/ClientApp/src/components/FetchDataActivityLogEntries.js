@@ -51,9 +51,8 @@ class FetchDataActivityLogEntries extends Component {
         };
 
         this.handleSuccessfulAuth = this.handleSuccessfulAuth.bind(this);
-        this.removeData = this.removeData.bind(this);
         this.deleteHandler = this.deleteHandler.bind(this);
-
+        this.handleRemove = this.handleRemove.bind(this);
 
         const { selectedOption } = this.state;
         //this.deleteHandler = this.deleteHandler.bind(this);
@@ -83,7 +82,6 @@ class FetchDataActivityLogEntries extends Component {
     }
 
     handleSubmit = (e) => {
-        e.preventDefault()
         const data = this.state;
         console.log(data)
         axios.post('https://localhost:44325/api/activityLogEntries/post', this.state)
@@ -93,67 +91,24 @@ class FetchDataActivityLogEntries extends Component {
             })
     }
 
-    handleRemove = (e) => {
-        e.preventDefault()
+    //radera en rad 
+    handleRemove = (id) => {
         const data = this.state;
         console.log(data)
-        axios.delete('https://localhost:44325/api/activityLogEntriesFrontPage', this.state)
-            .then(response => {
-                //this.setState(previousState => {
-                //    return {
-                //        movies: previousState.movies.filter(m => m.id !== movie.id)
-                //    };
-                //});
-            })
-    }
-
-    removeActivity = (e, activityLogEntries) => {
-        e.preventDefault();
-
-        if (this.props.removeClick) {
-            this.props.removeClick(activityLogEntries);
-        }
-    };
-
-
-
-    removeData = (e) => {
-        e.preventDefault()
-        const data = this.state;
-        console.log(data)
-        axios.post('https://localhost:44325/api/activityLogEntries/delete/{id}', this.state)
+        axios.delete('https://localhost:44325/api/activityLogEntries/delete/' + id,id)
             .then(response => {
                 console.log(response)
                 window.location.reload();
             })
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //DELETE KNAPP ICKE FUNKTIONELL
+ 
 
 
 
+  
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Exempel på att hämta data:
-
-
-
-    //handleSubmitSaveToHistory = (e) => {
-    //    e.preventDefault()
-    //    console.log(this.state)
-    //    axios.post('https://localhost:44325/history')
-    //        .then(response => {
-    //            console.log(response)
-
-
-    //        })
-    //        .catch(error => {
-    //            console.log(error)
-    //        })
-
-    //}
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   
 
 
     handleChange = selectedOption => {
@@ -226,7 +181,7 @@ class FetchDataActivityLogEntries extends Component {
     //}
 
     deleteHandler(id) {
-        id.preventDefault()
+        //id.preventDefault()
         const data = this.state;
         console.log(data)
         axios.delete('https://localhost:44325/api/activityLogEntries/delete', this.state)
@@ -323,35 +278,34 @@ class FetchDataActivityLogEntries extends Component {
                     <h1>TidsLoggen</h1>
                     <br />
                     <Row>
-                        <div class="col-sm-4"></div>
+                        <div className="col-sm-4"></div>
                         <form onSubmit={this.handleSubmit}>
-                            <div class="form-group">
+                            <div className="form-group">
 
-                                <Form>
 
                                     <Row>
                                         <Col>
                                             <Form.Group controlId="formGroupPassword">
-                                                <Form.Control type="text" Placeholder="Arbetsuppgift *" id="name" name="name" onChange={this.handleNameChange} />
+                                                <Form.Control type="text" placeholder="Arbetsuppgift *" id="name" name="name" onChange={this.handleNameChange} />
                                             </Form.Group>
                                         </Col>
                                         <Col>
                                             <Form.Group controlId="formGroupEmail">
-                                                <Form.Control type="number" Placeholder="Tid*" id="name" name="hour" onChange={this.handleNameChange} />
+                                                <Form.Control type="number" placeholder="Tid*" id="name" name="hour" onChange={this.handleNameChange} />
                                             </Form.Group>
                                         </Col>
                                     </Row>
                                     <Form.Group controlId="formGroupEmail">
-                                        <Form.Control type="text" Placeholder="Projekt" id="project" name="project" onChange={this.handleNameChange} />
+                                        <Form.Control type="text" placeholder="Projekt" id="project" name="project" onChange={this.handleNameChange} />
                                     </Form.Group>
                                     <Form.Group controlId="formGroupEmail">
                                         <Form.Label>Beskrivning:</Form.Label>
                                         <Form.Control as="textarea" rows="3" type="text" id="description" name="description" onChange={this.handleNameChange} />
                                     </Form.Group>
 
-                                </Form>
+                           
                                 <br />
-                                <button type="submit" class="btn btn-info" >Spara</button>
+                                <button type="submit" className="btn btn-info" >Spara</button>
 
                             </div>
 
@@ -363,22 +317,6 @@ class FetchDataActivityLogEntries extends Component {
                 <br />
                 <Container>
                     <h2>Historik</h2>
-                    <div>
-                        {this.state.activityLogEntries.map(function (id) {
-                            return (
-                                    <tr key={id}>
-                                    <td>{id.name}</td>
-                                    <td>{id.hours}</td>
-                                    <td>{id.project}</td>
-                                    <button type="submit" onClick={(e) => this.handleRemove(e, this.activityLogEntries.id)}>
-                                    Delete
-                                </button>
-                                </tr>
-                                 
-                                )
-                            })}
-                        
-                    </div>
                     <Table id="myTable" striped bordered>
                         <thead>
                             <tr>
@@ -393,30 +331,23 @@ class FetchDataActivityLogEntries extends Component {
 
 
                         <tbody>
-                            {this.state.activityLogEntries.map(function (id) {
+                            {this.state.activityLogEntries.map(((item, i) => {
                                 return (
-                                    <tr key={id}>
-                                        <td>{id.name || id.selectListName}</td>
-                                        <td>{id.hours} h</td>
-                                        <td> {id.description}</td>
-                                        <td>{id.project}</td>
-                                        <td>{(new Date(id.createdDate).toLocaleDateString())}</td>
+                                    <tr key={i}>
+                                        <td>{item.name || item.selectListName}</td>
+                                        <td>{item.hours} h</td>
+                                        <td> {item.description}</td>
+                                        <td>{item.project}</td>
+                                        <td>{(new Date(item.createdDate).toLocaleDateString())}</td>
+
+
 
                                         <td className='opration'>
-                                            <button onClick={() => this.handleRemove(id)}>Delete</button>
+                                            <button onClick={() => this.handleRemove(item.id)}>Delete</button>
                                         </td>
-
-                                        <td>
-                                            <div>
-                                                <Button className='mr-2' onClick={() => this.handleRemove(this.state.activityLogEntries.id)} variant="danger">Delete</Button>
-                                                <Button onClick={function () { this.handleRemove(id) }} className="btn btn-danger btn-sm">Delete</Button>
-                                                <Button onClick={i => this.handleRemove(i)}>Delete Row</Button>
-                                            </div>
-                                        </td>
-
                                     </tr>
                                 )
-                            })}
+                            }))}
                         </tbody>
 
                     </Table>

@@ -77,7 +77,7 @@ namespace WelandTimeLogg.Controllers
         //        SelectActivity = dataContext.ActivityLogEntries().Select(
         //        x => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
         //        {
-                    
+
         //            selectListName = input.selectListName,
         //            name = input.name,
         //            createdDate = DateTime.Now,
@@ -114,10 +114,10 @@ namespace WelandTimeLogg.Controllers
         //        return RedirectToAction(nameof(Index), new { categoryId = s.SelectedCategoryId });
         //    }
 
-            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            //GET api/forms/5
-            [HttpGet("api/activityLogEntries/{Id}")]
+        //GET api/forms/5
+        [HttpGet("api/activityLogEntries/{Id}")]
         public IActionResult GetActivityLogEntriesResultById(int id)
         {
             ActivityLogEntries activityLogEntries = dataContext.ActivityLogEntries.FirstOrDefault(f => f.id == id);
@@ -132,7 +132,7 @@ namespace WelandTimeLogg.Controllers
             return Ok(activityLogEntries);
         }
 
-        
+
         [Consumes("application/json")]
         [HttpPost("api/activityLogEntries/post")]
         public ActionResult PostActivityLogEntries([FromBody] ActivityLogSmall input)
@@ -144,13 +144,13 @@ namespace WelandTimeLogg.Controllers
                 {
                     activityLogDto = new ActivityLogEntries
                     {
-                       //if string.selectListname = null =>
-                       //selectListname = input.name &
-                       //if string.name = "" =>
-                       //string.name= input.selectListName
+                        //if string.selectListname = null =>
+                        //selectListname = input.name &
+                        //if string.name = "" =>
+                        //string.name= input.selectListName
 
-                   
-                       //selectListTwo = input.selectListTwo,
+
+                        //selectListTwo = input.selectListTwo,
                         selectListName = input.selectListName,
                         name = input.name,
                         createdDate = DateTime.Now,
@@ -160,7 +160,7 @@ namespace WelandTimeLogg.Controllers
 
                     };
 
-                   
+
 
                 }
                 catch (Exception)
@@ -177,7 +177,7 @@ namespace WelandTimeLogg.Controllers
             }
             else
             {
-             
+
                 return View();
             }
 
@@ -185,26 +185,38 @@ namespace WelandTimeLogg.Controllers
         }
 
 
-        [HttpPost("api/activityLogEntries/delete/{id}")]
-        public IActionResult DeleteCategory(int Id)
-        {
-            dataContext.Remove(Id);
-            return RedirectToAction("Index");
-        }
+        //[HttpDelete("api/activityLogEntries/delete/{id}")]
+        //public void DeleteActivityLogById(int id, ActivityLogEntries a)
+
+        //{
+        //    var dataContextActivity = dataContext.ActivityLogEntries.FirstOrDefault(x => x.id.Equals(id));
+
+        //    dataContext.ActivityLogEntries.Remove(dataContextActivity);
+        //    dataContext.SaveChanges();
+
+
+
+        //}
+
+        //Funktion för att ta bort allt från tabellen 
 
         [HttpDelete("api/activityLogEntries/delete/{id}")]
-        public void DeleteActivityLogById(int id, ActivityLogEntries a)
-        {
+        public void DeleteAllActivityLogById(int id, ActivityLogEntries a)
 
+        {
 
             var dataContextActivity = dataContext.ActivityLogEntries.FirstOrDefault(x => x.id.Equals(id));
 
-            dataContext.Remove(dataContextActivity);
+            dataContext.ActivityLogEntries.Remove(dataContextActivity);
             dataContext.SaveChanges();
-        }
 
+
+
+        }
     }
 
 }
+
+
 
 

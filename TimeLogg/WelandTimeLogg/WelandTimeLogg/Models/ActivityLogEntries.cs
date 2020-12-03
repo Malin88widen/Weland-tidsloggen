@@ -43,6 +43,7 @@ namespace WelandTimeLogg.Models
 
         public Activities activities { get; set; }
 
+        
     
     }
 }
